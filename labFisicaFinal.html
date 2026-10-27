@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laboratorio virtual · Protoboard y circuitos DC</title>
+<title>Laboratorio virtual · Electricidad y magnetismo</title>
 <style>
 :root{
   --bench:#12161b; --panel:#1a1f26; --panel-2:#212832; --edge:#2c3540; --edge-hi:#3d4855;
@@ -152,8 +152,8 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
 <body>
 
 <header class="top">
-  <h1>Protoboard · circuitos DC</h1>
-  <span class="sub">Arma circuitos con resistencias, capacitores, inductores, fuentes y cinco instrumentos</span>
+  <h1>Protoboard · circuitos eléctricos</h1>
+  <span class="sub">Circuitos DC y transitorios RLC con generador de señales y osciloscopio virtual</span>
   <span class="tag" id="tag">listo</span>
 </header>
 
@@ -200,6 +200,12 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
     <div class="body">
       <div class="btnrow">
         <button class="mini" data-preset="laboratorio">Rearmar circuito del profesor</button>
+        <button class="mini" data-preset="rc">Prueba RC</button>
+        <button class="mini" data-preset="rl">Prueba RL</button>
+        <button class="mini" data-preset="rlc">Prueba RLC serie</button>
+        <button class="mini" data-preset="filterLP">Filtro RC pasa-bajas</button>
+        <button class="mini" data-preset="filterHP">Filtro RC pasa-altas</button>
+        <button class="mini" data-preset="dc2">DC con dos fuentes</button>
         <button class="mini" id="saveJson">Guardar</button>
         <button class="mini" id="loadJson">Abrir</button>
       </div>
@@ -218,6 +224,22 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
   <details class="sect" open>
     <summary>Fuentes de tensión DC</summary>
     <div class="body" id="srcPanel"></div>
+  </details>
+
+  <!-- Ampliación de proyecto: el generador se implementa sobre una fuente física existente.
+       La salida mantiene la resistencia interna, el límite de corriente y el cableado del circuito. -->
+  <details class="sect" open>
+    <summary>Generador de señales</summary>
+    <div class="body">
+      <label class="fld">Fuente de salida</label>
+      <select id="waveSource" style="width:100%"><option value="0">Fuente 1</option><option value="1">Fuente 2</option><option value="2">Fuente 3</option></select>
+      <div class="row" style="margin-top:8px"><label class="fld" style="flex:1">Forma</label><select id="waveKind" style="flex:1"><option value="dc">DC</option><option value="sine">Senoidal</option><option value="square">Cuadrada</option><option value="triangle">Triangular</option></select></div>
+      <div class="row"><label class="fld" style="flex:1">Amplitud (V pico)</label><input id="waveAmp" type="number" min="0" max="30" step="0.1" value="5" style="width:105px"></div>
+      <div class="row"><label class="fld" style="flex:1">Frecuencia (Hz)</label><input id="waveFreq" type="number" min="1" max="500" step="any" value="100" style="width:105px"></div>
+      <div class="row"><label class="fld" style="flex:1">Offset DC (V)</label><input id="waveOffset" type="number" min="-30" max="30" step="0.1" value="0" style="width:105px"></div>
+      <div class="row"><label class="fld" style="flex:1">Ciclo útil (%)</label><input id="waveDuty" type="number" min="1" max="99" step="1" value="50" style="width:105px"></div>
+      <p class="hint">El generador modula la fuente seleccionada. La señal es limitada al rango permitido de la fuente; ajuste Δt para representar frecuencias altas.</p>
+    </div>
   </details>
 
   <details class="sect" open>
@@ -264,9 +286,26 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
           <option value="0">Pausa</option>
         </select>
       </div>
+      <div class="row" style="margin-top:8px"><label class="fld" style="flex:1">Paso Δt</label><select id="timeStep" style="flex:1"><option value="auto">Auto · señal y τ</option><option value="0.001">1 ms</option><option value="0.000125">125 µs</option><option value="0.0000625">62,5 µs</option><option value="0.0001">100 µs</option><option value="0.00001">10 µs</option><option value="0.000002">2 µs</option><option value="0.0000005">0,5 µs</option></select></div>
+      <!-- Osciloscopio educativo de dos canales: CH1 mide el voltímetro y CH2 el amperímetro. -->
+      <div class="row" style="margin-top:9px"><label class="fld" style="flex:1">Tiempo/div (s)</label><input id="scopeTimeDiv" type="number" min="0.000001" step="any" value="0.001" style="width:115px"></div>
+      <div class="row"><label class="fld" style="flex:1;color:var(--cyan)">CH1 voltios/div</label><input id="scopeVDiv" type="number" min="0.000001" step="any" value="2" style="width:115px"></div>
+      <div class="row"><label class="fld" style="flex:1;color:var(--amber)">CH2 amperios/div</label><input id="scopeIDiv" type="number" min="0.000001" step="any" value="0.005" style="width:115px"></div>
+      <div class="row"><label class="fld" style="flex:1">Trigger CH1 (V)</label><input id="scopeTrigger" type="number" step="any" value="0" style="width:115px"></div>
       <canvas id="trace" height="150"></canvas>
       <div class="legend"><span class="lv">━ V voltímetro</span><span class="li">━ I amperímetro</span><button class="mini" id="clrTrace" style="margin-left:auto">Limpiar</button></div>
-      <p class="hint">Valores reales del circuito (sin la oscilación de los medidores). En 0,01× la constante τ = 6,67 ms se ve como 0,67 s.</p>
+      <button class="mini" id="scopeCsv" style="margin-top:7px">Exportar captura temporal CSV</button>
+      <p class="hint">CH1 registra el voltaje entre las puntas del voltímetro; CH2 registra la corriente del amperímetro. Escalas y trigger editables. Δt efectivo limita el ancho de banda simulado.</p>
+    </div>
+  </details>
+
+  <details class="sect">
+    <summary>Modelo físico y numérico</summary>
+    <div class="body help-accordion">
+      <details><summary>Elementos y energía</summary><p>Resistencia: v = R·i y P = i²R. Capacitor: i = C·dv/dt, Q = C·v y U<sub>C</sub> = ½Cv². Inductor: v = L·di/dt y U<sub>L</sub> = ½Li². En DC estable, C se comporta como circuito abierto y L como cortocircuito ideal.</p></details>
+      <details><summary>Transitorios y RLC</summary><p>τ<sub>RC</sub> = R<sub>Th</sub>C y τ<sub>RL</sub> = L/R<sub>Th</sub>. Para RLC serie: ω<sub>0</sub> = 1/√(LC), R<sub>crítica</sub> = 2√(L/C); R menor produce respuesta subamortiguada. El tiempo y la frecuencia determinan si el fenómeno queda resuelto por Δt.</p></details>
+      <details><summary>Solución numérica</summary><p>La red usa MNA y eliminación Gaussiana. Capacitores e inductores usan equivalentes compañeros con Euler implícito. Δt automático se adapta a la señal; en cámara lenta también estima la τ más rápida a partir de valores R, C y L conectados. Para aceptar resultados, comparar Δt y Δt/2 y reportar error porcentual contra teoría.</p></details>
+      <p class="hint"><b>Alcance del modelo:</b> componentes concentrados e ideales salvo resistencia interna de fuentes, cables y burden de instrumentos. La red actual incluye fuga numérica a referencia para regular nodos flotantes; aún debe mejorarse el diagnóstico de topologías singulares.</p>
     </div>
   </details>
 
@@ -485,6 +524,9 @@ const st = {
   transient:{dt:0.002,speed:1,time:0,history:{},lastWall:performance.now(),accum:0,lastResult:null},
   trace:[]                        // muestras {t,v,i} para la gráfica en el tiempo
 };
+// Estado del generador: fuente elegida y parámetros de onda. La fuente conserva
+// sus parámetros DC; al volver a forma DC recupera exactamente su valor configurado.
+st.wave={source:0,kind:'dc',amp:5,freq:100,offset:0,duty:50};
 const TRACE_WALL=6;               // segundos de pantalla que abarca la gráfica
 const GROUP={R:'res',C:'caps',L:'inds',S:'sws'};
 const grp=t=>st[GROUP[t]];
@@ -507,6 +549,19 @@ function removeComponent(type,id){
 }
 SRCBOX.forEach((b,i)=>st.srcs.push({i, V:i===0?12:i===1?5:9, on:i===0, tripped:false}));
 function Rval(k){ const r=st.res[k]; return Math.max(1e-3, Number(r.value)||nominal(r.bands)); }
+// Muestras de las cuatro formas solicitadas. La cuadrada define el nivel alto
+// durante el ciclo útil y el nivel bajo durante el resto del período.
+function sourceInstantValue(s,t){
+  const w=st.wave;
+  if(w.kind==='dc'||s.i!==w.source) return s.V;
+  const f=Math.min(500,Math.max(1,+w.freq||1)), a=Math.max(0,+w.amp||0), off=Number(w.offset)||0, phase=((t*f)%1+1)%1;
+  let signal=0;
+  if(w.kind==='sine') signal=a*Math.sin(2*Math.PI*phase);
+  else if(w.kind==='square') signal=phase<(Math.max(1,Math.min(99,+w.duty||50))/100)?a:-a;
+  else signal=a*(phase<.5?-1+4*phase:3-4*phase);
+  // La fuente controlada admite polaridad invertida; el tope simétrico evita valores extremos.
+  return Math.max(-VSRC_MAX,Math.min(VSRC_MAX,off+signal));
+}
 
 /* ============================================================
    5. RED ELÉCTRICA (análisis nodal modificado)
@@ -595,7 +650,8 @@ function solveTransient(){
     if(ip!==undefined){ A[row][ip]+=1; A[ip][row]+=1; }
     if(iN!==undefined){ A[row][iN]-=1; A[iN][row]-=1; }
     if(ip===undefined && iN===undefined) A[row][row]=1;
-    b[row]=s.V;
+    // Fuente 1/2/3 pueden mantener DC; solo la fuente seleccionada entrega la forma temporal.
+    b[row]=sourceInstantValue(s,st.transient.time);
   });
   const x=gauss(A,b);
   const V=nm=>{ const i=ix(nm); return i===undefined?0:(x[i]||0); };
@@ -614,28 +670,50 @@ function solveTransient(){
   return {V, srcI, find, branchI, time:st.transient.time, vspan:vmax-vmin};
 }
 function recordTrace(V){
-  const T=st.transient, tr=st.trace, win=TRACE_WALL*Math.max(T.speed,1e-3);
+  const T=st.transient, tr=st.trace, win=Math.max(TRACE_WALL*Math.max(T.speed,1e-3),10*(+L('scopeTimeDiv')?.value||.001));
   const last=tr[tr.length-1];
   if(last&&T.time<last.t) tr.length=0;                       // el tiempo se reinició
-  if(last&&T.time-last.t<win/400) return;
+  const samplePeriod=st.wave.kind==='dc'?win/600:1/(Math.max(1,+st.wave.freq||1)*20);
+  if(last&&T.time-last.t<samplePeriod) return;
   tr.push({t:T.time,
     v:connected('V')?V('MVr')-V('MVb'):null,
     i:connected('A')&&!st.fuseA?(V('MAr')-V('MAb'))/BURDEN:null});
-  while(tr.length&&tr[0].t<T.time-win) tr.shift();
+  // Retención acotada para que un barrido largo no consuma memoria sin límite.
+  while(tr.length>20000||tr.length&&tr[0].t<T.time-win) tr.shift();
 }
 // Avanza la simulación al ritmo del reloj × velocidad. El paso Δt escala con la
 // velocidad para que en cámara lenta la curva de carga tenga buena resolución.
 function setSpeed(sp){
   const T=st.transient; T.speed=sp; T.accum=0; T.lastWall=performance.now();
-  if(sp>0) T.dt=Math.max(2e-5,0.002*sp);
+  // En automático se toma el menor entre el paso base escalado y T/80 de la señal.
+  // En manual se respeta la elección con un límite inferior de 0,5 µs por estabilidad práctica.
+  if(sp>0){const choice=L('timeStep')?.value||'auto';
+    const signalDt=1/(Math.max(1,+st.wave.freq||1)*80);
+    const tauDt=sp<=0.01?fastestEstimatedTau()/20:Infinity;
+    T.dt=choice==='auto'?Math.max(5e-7,Math.min(0.002*sp,signalDt,tauDt)):Math.max(5e-7,+choice);}
   st.trace.length=0;
+}
+// Estimación conservadora, no sustituto de RTh de la topología. Para RC se
+// aproxima Req con todas las R en paralelo; para RL se usa su suma como límite
+// conservador de la resistencia serie. El fin es resolver la escala temporal más rápida.
+function fastestEstimatedTau(){
+  const rs=Object.values(st.res).filter(r=>r.a&&r.b&&!r.burned).map(r=>Math.max(1e-3,+r.value||1000));
+  if(!rs.length)return Infinity;
+  const rParallel=1/rs.reduce((sum,r)=>sum+1/r,0), rSeries=rs.reduce((sum,r)=>sum+r,0);
+  let tau=Infinity;
+  for(const c of Object.values(st.caps))if(c.a&&c.b&&!c.burned)tau=Math.min(tau,rParallel*Math.max(1e-12,+c.value||1e-6));
+  for(const l of Object.values(st.inds))if(l.a&&l.b&&!l.burned)tau=Math.min(tau,Math.max(1e-9,+l.value||1e-3)/rSeries);
+  return tau;
 }
 function solveDC(){
   const T=st.transient, now=performance.now();
   T.accum+=Math.min(.25,Math.max(0,(now-T.lastWall)/1000))*T.speed;
   T.lastWall=now;
   let res=T.lastResult;
-  while(T.accum>=T.dt){res=solveTransient();T.accum-=T.dt;}
+  // Limita el trabajo de una actualización para que pasos muy finos no congelen la interfaz.
+  // Si se alcanza el presupuesto, el tiempo pendiente se procesa en ciclos posteriores.
+  let budget=12000;
+  while(T.accum>=T.dt&&budget-->0){res=solveTransient();T.accum-=T.dt;}
   if(!res){ // cambio de montaje: un paso (en pausa, casi nulo para conservar la carga)
     const d=T.dt; if(!T.speed) T.dt=1e-9; res=solveTransient(); T.dt=d; }
   T.lastResult=res;return res;
@@ -864,7 +942,7 @@ function drawSources(){
       <rect x="${x+4}" y="${y+4}" width="${SRCW-8}" height="${SRCH-8}" rx="7" fill="none" stroke="#ffffff12"/></g>`;
     s+=`<text class="title" x="${x+14}" y="${y+22}">FUENTE ${i+1}</text>`;
     s+=`<rect x="${x+14}" y="${y+32}" width="126" height="40" rx="4" fill="url(#lcdG)" stroke="#0e1410"/>`;
-    s+=`<text class="lcdtxt" x="${x+118}" y="${y+61}" font-size="22" text-anchor="end">${sc.on?sc.V.toFixed(1).replace('.',','):sc.tripped?'TRIP':'- - -'}</text>`;
+    s+=`<text class="lcdtxt" id="srcvalue_${i}" x="${x+118}" y="${y+61}" font-size="22" text-anchor="end">${sc.on?sc.V.toFixed(1).replace('.',','):sc.tripped?'TRIP':'- - -'}</text>`;
     s+=`<text class="lcdtxt" x="${x+123}" y="${y+61}" font-size="13" text-anchor="start">V</text>`;
     s+=`<circle cx="${x+SRCW-34}" cy="${y+30}" r="7" fill="${sc.on?'#3fbf6f':sc.tripped?'#e0483a':'#3a4249'}" stroke="#0c1116"/>`;
     s+=`<text class="sub" x="${x+SRCW-34}" y="${y+50}" text-anchor="middle">${sc.on?'ON':sc.tripped?'SOBRECORR.':'OFF'}</text>`;
@@ -1098,25 +1176,31 @@ function drawTrace(){
   const dpr=window.devicePixelRatio||1, W=cv.offsetWidth, H=150;
   if(cv.width!==Math.round(W*dpr)){ cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H);
-  const T=st.transient, win=TRACE_WALL*Math.max(T.speed,1e-3), tr=st.trace;
-  const pl=46, pr=50, pt=10, pb=20, w=W-pl-pr, h=H-pt-pb, t1=T.time, t0=t1-win;
+  const T=st.transient, tr=st.trace;
+  const timeDiv=Math.max(1e-6,+L('scopeTimeDiv').value||.001), vDiv=Math.max(1e-9,+L('scopeVDiv').value||2), iDiv=Math.max(1e-9,+L('scopeIDiv').value||.005);
+  const win=10*timeDiv, pl=46, pr=50, pt=10, pb=20, w=W-pl-pr, h=H-pt-pb, t1=T.time;
+  // Disparo de flanco ascendente en CH1; sin cruce se mantiene el barrido continuo.
+  const trig=Number(L('scopeTrigger').value)||0; let edge=null;
+  for(let j=1;j<tr.length;j++) if(tr[j-1].v!=null&&tr[j].v!=null&&tr[j-1].v<trig&&tr[j].v>=trig){edge=tr[j].t;}
+  const t0=edge!=null&&t1-edge<win*2?edge-2*timeDiv:t1-win;
   const nice=m=>{ if(!(m>0)) return 1; const e=Math.pow(10,Math.floor(Math.log10(m))), f=m/e;
     return (f<=1?1:f<=2?2:f<=5?5:10)*e; };
-  const scale=key=>{ let m=0; tr.forEach(p=>{ if(p[key]!=null) m=Math.max(m,Math.abs(p[key])); }); return nice(m*1.1); };
-  const sv=scale('v'), si=scale('i');
-  const neg=tr.some(p=>(p.v!=null&&p.v<-sv*0.02)||(p.i!=null&&p.i<-si*0.02));
-  const y=(x,s)=>pt+h*(neg?0.5-0.5*x/s:1-x/s), X=t=>pl+w*(t-t0)/win;
+  const sv=4*vDiv, si=4*iDiv;
+  const y=(x,s)=>pt+h*(.5-x/s), X=t=>pl+w*(t-t0)/win;
   g.font='10px ui-monospace,Consolas,monospace'; g.lineWidth=1;
-  for(let k=0;k<=4;k++){ const yy=pt+h*k/4; g.strokeStyle='#232a33'; g.beginPath(); g.moveTo(pl,yy); g.lineTo(pl+w,yy); g.stroke(); }
+  for(let k=0;k<=8;k++){ const yy=pt+h*k/8; g.strokeStyle=k===4?'#465260':'#232a33'; g.beginPath(); g.moveTo(pl,yy); g.lineTo(pl+w,yy); g.stroke(); }
+  for(let k=0;k<=10;k++){ const xx=pl+w*k/10; g.strokeStyle='#232a33'; g.beginPath(); g.moveTo(xx,pt); g.lineTo(xx,pt+h); g.stroke(); }
   g.strokeStyle='#3d4855'; g.strokeRect(pl,pt,w,h);
   const lab=(s,u)=>engTxt(s,u);
-  g.fillStyle='#4fd1e0'; g.textAlign='right'; g.fillText(lab(sv,'V'),pl-4,pt+8); g.fillText(neg?lab(-sv,'V'):'0',pl-4,pt+h);
-  g.fillStyle='#f0a12e'; g.textAlign='left'; g.fillText(lab(si,'A'),pl+w+4,pt+8); g.fillText(neg?lab(-si,'A'):'0',pl+w+4,pt+h);
-  g.fillStyle='#6c7a8a'; g.textAlign='center'; g.fillText(`últimos ${engTxt(win,'s')} · t = ${engTxt(t1,'s')}`,pl+w/2,H-5);
+  g.fillStyle='#4fd1e0'; g.textAlign='right'; g.fillText('+'+lab(sv,'V'),pl-4,pt+8); g.fillText('−'+lab(sv,'V'),pl-4,pt+h);
+  g.fillStyle='#f0a12e'; g.textAlign='left'; g.fillText('+'+lab(si,'A'),pl+w+4,pt+8); g.fillText('−'+lab(si,'A'),pl+w+4,pt+h);
+  g.fillStyle='#6c7a8a'; g.textAlign='center'; g.fillText(`10 div · ${engTxt(timeDiv,'s')}/div · t = ${engTxt(t1,'s')}`,pl+w/2,H-5);
+  const ty=y(trig,sv); if(ty>=pt&&ty<=pt+h){g.strokeStyle='#4fd1e077';g.setLineDash([4,3]);g.beginPath();g.moveTo(pl,ty);g.lineTo(pl+w,ty);g.stroke();g.setLineDash([]);}
+  g.save(); g.beginPath(); g.rect(pl,pt,w,h); g.clip();
   const line=(key,s,col)=>{ g.strokeStyle=col; g.lineWidth=1.8; g.beginPath(); let on=false;
-    tr.forEach(p=>{ if(p[key]==null){on=false;return;} const xx=X(p.t), yy=y(p[key],s);
+    tr.forEach(p=>{ if(p[key]==null||p.t<t0||p.t>t0+win){on=false;return;} const xx=X(p.t), yy=y(p[key],s);
       if(on) g.lineTo(xx,yy); else { g.moveTo(xx,yy); on=true; } }); g.stroke(); };
-  line('v',sv,'#4fd1e0'); line('i',si,'#f0a12e');
+  line('v',sv,'#4fd1e0'); line('i',si,'#f0a12e'); g.restore();
   if(!tr.some(p=>p.v!=null||p.i!=null)){ g.fillStyle='#6c7a8a'; g.fillText('Conecta el voltímetro o el amperímetro',pl+w/2,pt+h/2); }
 }
 
@@ -1190,9 +1274,11 @@ function paintMeter(k){
 }
 function renderReadings(){
   const res=solveDC();
+  // Refleja en el panel de la fuente la tensión instantánea que realmente se estampó en MNA.
+  st.srcs.forEach(s=>{const el=L('srcvalue_'+s.i);if(el)el.textContent=s.on?sourceInstantValue(s,st.transient.time).toFixed(1).replace('.',','):s.tripped?'TRIP':'- - -';});
   checkBurnout(res);
   drawFlow(res);
-  const energized=st.srcs.some(s=>s.on&&s.V>0.1);
+  const energized=st.srcs.some(s=>s.on&&(s.V>0.1||(st.wave.kind!=='dc'&&s.i===st.wave.source)));
   // voltímetro: diferencia de potencial entre sus bornes (en paralelo, Zin 10 MΩ)
   if(!connected('V')){ meterTarget('V',null); showMeter('V','— — —','V','sin conectar',false,'— — —'); lastRead.V=null; }
   else{ meterTarget('V',res.V('MVr')-res.V('MVb')); paintMeter('V'); }
@@ -1273,8 +1359,8 @@ function renderAnalysis(res){
   const f=(x,u,d)=>`<span class="n">${x.toFixed(d==null?4:d)}</span> <span class="l">${u}</span>`;
   st.srcs.forEach(s=>{
     if(!s.on){ h+=`<div><span class="l">Fuente ${s.i+1}:</span> ${s.tripped?'<span class="bad">disparada por sobrecorriente</span>':'apagada'}</div>`; return; }
-    const I=res.srcI[s.i]||0;
-    h+=`<div><span class="l">Fuente ${s.i+1}:</span> ${f(s.V,'V',1)} · I entregada = ${f(I*1000,'mA',3)} · P = ${f(s.V*I*1000,'mW',2)}</div>`;
+    const I=res.srcI[s.i]||0, Vterm=res.V('SP'+s.i)-res.V('SN'+s.i);
+    h+=`<div><span class="l">Fuente ${s.i+1}:</span> V<sub>terminal</sub> = ${f(Vterm,'V',3)} · I entregada = ${f(I*1000,'mA',3)} · P<sub>terminal</sub> = ${f(Vterm*I*1000,'mW',2)}</div>`;
   });
   h+='<hr>';
   const comps=placedComps();
@@ -1714,7 +1800,7 @@ function buildSrcPanel(){
     <div class="srcrow">
       <div class="top"><span class="nm">Fuente ${s.i+1}</span>
         <button class="mini ${s.on?'on':''}" data-son="${s.i}">${s.on?'Encendida':s.tripped?'Disparada':'Apagada'}</button>
-        <span class="vv">${s.V.toFixed(1).replace('.',',')} V</span><button class="mini" data-config-src="${s.i}" title="Voltaje exacto">⚙</button></div>
+        <span class="vv">${s.V.toFixed(1).replace('.',',')} V base</span><button class="mini" data-config-src="${s.i}" title="Voltaje base exacto">⚙</button></div>
       <input type="range" min="0" max="${VSRC_MAX}" step="0.1" value="${s.V}" data-sv="${s.i}">
     </div>`).join('') +
     `<div class="btnrow"><button class="mini ${st.ideal?'on':''}" id="tgIdeal">Fuentes ideales (sin r interna)</button></div>
@@ -1775,7 +1861,8 @@ function renderLog(){
 }
 function download(name,text,type){
   const a=document.createElement('a');
-  a.href=URL.createObjectURL(new Blob(['﻿'+text],{type:type||'text/plain;charset=utf-8'}));
+  const payload=(type||'').startsWith('text/csv')?'\uFEFF'+text:text;
+  a.href=URL.createObjectURL(new Blob([payload],{type:type||'text/plain;charset=utf-8'}));
   a.download=name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(a.href),3000);
 }
@@ -1787,10 +1874,56 @@ function resetTransient(){Object.assign(st.transient,{history:{},time:0,accum:0,
 function clearBoard(){st.wires=[];st.pend=null;st.res={};st.caps={};st.inds={};st.sws={};st.selected=null;st.counts={R:0,C:0,L:0,S:0};st.snapshot=null;resetTransient();}
 const W=(a,b,c)=>st.wires.push({id:'w'+(st.wid++),a,b,color:c});
 function preset(name){
-  if(name!=='laboratorio') return;
   clearBoard();
   st.srcs.forEach(s=>{s.tripped=false;s.on=false;});
   st.srcs[0].on=true; st.srcs[0].V=9;
+  // Los ejemplos de respuesta al escalón inician con DC; los filtros activan AC explícitamente.
+  if(name!=='filterLP'&&name!=='filterHP'){st.wave.source=0;st.wave.kind='dc';L('waveSource').value='0';L('waveKind').value='dc';}
+  if(name==='rc'||name==='rl'){
+    const sw=createComponent('S',{span:3,orient:'h',a:'T2C',b:'T5C',closed:false});
+    const r=createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
+    const reactive=name==='rc'
+      ?createComponent('C',{value:1e-6,span:3,orient:'v',a:'T20D',b:'B20G',polar:false,vmax:25})
+      :createComponent('L',{value:10e-3,span:3,orient:'v',a:'T20D',b:'B20G',imax:.5});
+    W('S0p','T2A','rojo');W('T5A','MAr','rojo');W('MAb','T7A','negro');W('T12A','T20A','rojo');
+    W('B20J','S0n','negro');W('MVr','T20B','amarillo');W('MVb','B20I','azul');
+    st.selected=(name==='rc'?'C:':'L:')+reactive.id;
+    buildSrcPanel();redraw();msg(`Prueba ${name.toUpperCase()} cargada · cierre S1 para iniciar`);return;
+  }
+  if(name==='filterLP'||name==='filterHP'){
+    st.wave={source:0,kind:'sine',amp:1,freq:159.15,offset:0,duty:50};
+    st.srcs.forEach((s,i)=>{s.on=i===0;s.V=0;});
+    if(name==='filterLP'){
+      createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
+      const c=createComponent('C',{value:1e-6,span:3,orient:'v',a:'T20D',b:'B20G',polar:false});
+      W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T12A','T20A','amarillo');W('B20J','S0n','negro');W('MVr','T20B','rojo');W('MVb','B20I','azul');st.selected='C:'+c.id;
+    }else{
+      const c=createComponent('C',{value:1e-6,span:5,orient:'h',a:'T7C',b:'T12C',polar:false});
+      createComponent('R',{value:1000,span:5,orient:'h',a:'T14C',b:'T19C'});
+      W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T12A','T14A','amarillo');W('T19A','B19J','negro');W('S0n','B19I','negro');W('MVr','T14B','rojo');W('MVb','T19B','azul');st.selected='C:'+c.id;
+    }
+    L('waveSource').value='0';L('waveKind').value='sine';L('waveAmp').value='1';L('waveFreq').value='159.15';L('waveOffset').value='0';
+    buildSrcPanel();redraw();setSpeed(+L('simSpeed').value||1);msg(name==='filterLP'?'Filtro pasa-bajas · frecuencia de corte ≈ 159 Hz':'Filtro pasa-altas · frecuencia de corte ≈ 159 Hz');return;
+  }
+  if(name==='dc2'){
+    st.wave.kind='dc';st.srcs.forEach((s,i)=>{s.on=i<2;s.V=i===0?5:i===1?4:s.V;});
+    createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
+    createComponent('R',{value:2000,span:5,orient:'h',a:'T14C',b:'T19C'});
+    W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T12A','T14A','amarillo');W('T19A','B26J','negro');
+    W('S0n','S1p','azul');W('S1n','B26I','negro');W('MVr','T14B','rojo');W('MVb','T19B','azul');
+    buildSrcPanel();redraw();msg('DC con dos fuentes en serie · 9 V total');return;
+  }
+  if(name==='rlc'){
+    createComponent('S',{span:3,orient:'h',a:'T2C',b:'T5C',closed:false});
+    createComponent('R',{value:20,span:5,orient:'h',a:'T7C',b:'T12C'});
+    createComponent('L',{value:10e-3,span:3,orient:'h',a:'T14C',b:'T19C',imax:1});
+    const c=createComponent('C',{value:1e-6,span:3,orient:'h',a:'T21C',b:'T26C',polar:false,vmax:25});
+    W('S0p','T2A','rojo');W('T5A','MAr','rojo');W('MAb','T7A','negro');
+    W('T12A','T14A','amarillo');W('T19A','T21A','azul');W('T26A','B26J','rojo');W('B26I','S0n','negro');
+    W('MVr','T21B','amarillo');W('MVb','T26I','azul');st.selected='C:'+c.id;
+    buildSrcPanel();redraw();msg('Prueba RLC serie subamortiguada cargada · cierre S1');return;
+  }
+  if(name!=='laboratorio') return;
   // Batería(+) → S1 → R1 → nodo X ; R2 y C1 en paralelo entre X y la batería(−).
   createComponent('S',{span:3,orient:'h',a:'T2C',b:'T5C',closed:false});
   createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
@@ -1822,7 +1955,21 @@ function bind(){
     L('tgAn').classList.toggle('on',st.analysis); renderReadings(); };
   L('randAll').onclick=()=>{Object.keys(st.res).forEach(randomizeR);st.transient.lastResult=null;redraw();};
   L('simSpeed').onchange=()=>{ setSpeed(+L('simSpeed').value); renderReadings(); };
+  L('timeStep').onchange=()=>{setSpeed(+L('simSpeed').value);msg(`Paso temporal Δt = ${engTxt(st.transient.dt,'s')}`);};
+  // Controles del generador de funciones sobre una de las fuentes DC existentes.
+  const waveRead=()=>{st.wave.source=+L('waveSource').value;st.wave.kind=L('waveKind').value;
+    st.wave.amp=Math.min(VSRC_MAX,Math.max(0,+L('waveAmp').value||0));st.wave.freq=Math.min(500,Math.max(1,+L('waveFreq').value||1));
+    st.wave.offset=+L('waveOffset').value||0;st.wave.duty=Math.max(1,Math.min(99,+L('waveDuty').value||50));
+    st.transient.lastResult=null; if(+L('simSpeed').value>0)setSpeed(+L('simSpeed').value); else st.trace.length=0;
+    L('tag').textContent=st.wave.kind==='dc'?'listo':'señal '+st.wave.kind; redraw();};
+  ['waveSource','waveKind','waveAmp','waveFreq','waveOffset','waveDuty'].forEach(id=>L(id).addEventListener('change',waveRead));
+  ['scopeTimeDiv','scopeVDiv','scopeIDiv','scopeTrigger'].forEach(id=>L(id).addEventListener('input',drawTrace));
   L('clrTrace').onclick=()=>{ st.trace.length=0; drawTrace(); };
+  L('scopeCsv').onclick=()=>{
+    if(!st.trace.length)return msg('Aún no hay datos temporales para exportar');
+    const rows=[['tiempo_s','voltaje_CH1_V','corriente_CH2_A'],...st.trace.map(p=>[p.t,p.v??'',p.i??''])];
+    download('osciloscopio_lab.csv',rows.map(r=>r.map(x=>`"${x}"`).join(',')).join('\r\n'),'text/csv;charset=utf-8');
+  };
   L('zIn').onclick=()=>setZoom(zoom*1.2);
   L('zOut').onclick=()=>setZoom(zoom/1.2);
   L('zFit').onclick=fitZoom;
@@ -1842,8 +1989,9 @@ function bind(){
     download('medidas_protoboard.csv', rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n'), 'text/csv;charset=utf-8');
   };
   L('saveJson').onclick=()=>{
-    const data={wires:st.wires, res:st.res, caps:st.caps, inds:st.inds, sws:st.sws,
-                srcs:st.srcs.map(s=>({i:s.i,V:s.V,on:s.on}))};
+    const data={wires:st.wires, res:st.res, caps:st.caps, inds:st.inds, sws:st.sws, ideal:st.ideal,
+                srcs:st.srcs.map(s=>({i:s.i,V:s.V,on:s.on})),wave:st.wave,
+                scope:{timeDiv:L('scopeTimeDiv').value,vDiv:L('scopeVDiv').value,iDiv:L('scopeIDiv').value,trigger:L('scopeTrigger').value,dt:L('timeStep').value}};
     download('circuito_protoboard.json', JSON.stringify(data,null,1), 'application/json');
   };
   L('loadJson').onclick=()=>L('fileIn').click();
@@ -1851,14 +1999,18 @@ function bind(){
     const f=ev.target.files[0]; if(!f) return;
     const rd=new FileReader();
     rd.onload=()=>{ try{
-      const d=JSON.parse(rd.result);
+      const d=JSON.parse(String(rd.result).replace(/^\uFEFF/,''));
       clearBoard();
       if(d.wires) st.wires=d.wires.filter(w=>PT[w.a]&&PT[w.b]);
       st.wid=st.wires.reduce((m,w)=>Math.max(m,+(String(w.id).match(/\d+/)||[0])[0]),0)+1;
       for(const [t,key] of [['R','res'],['C','caps'],['L','inds'],['S','sws']])
         if(d[key]) for(const [k,v] of Object.entries(d[key])) createComponent(t,{...v,id:k});
+      if(typeof d.ideal==='boolean') st.ideal=d.ideal;
       if(d.srcs) d.srcs.forEach(s=>{ if(st.srcs[s.i]){ setSourceV(st.srcs[s.i],+s.V); st.srcs[s.i].on=!!s.on; st.srcs[s.i].tripped=false; } });
-      buildSrcPanel(); redraw();
+      // Recupera configuración instrumental en archivos nuevos y mantiene compatibilidad con JSON anteriores.
+      if(d.wave){Object.assign(st.wave,d.wave);for(const [id,key] of [['waveSource','source'],['waveKind','kind'],['waveAmp','amp'],['waveFreq','freq'],['waveOffset','offset'],['waveDuty','duty']])L(id).value=st.wave[key];}
+      if(d.scope){L('scopeTimeDiv').value=d.scope.timeDiv||.001;L('scopeVDiv').value=d.scope.vDiv||2;L('scopeIDiv').value=d.scope.iDiv||.005;L('scopeTrigger').value=d.scope.trigger||0;if(d.scope.dt)L('timeStep').value=d.scope.dt;}
+      buildSrcPanel(); redraw(); setSpeed(+L('simSpeed').value||1);
     }catch(err){ msg('El archivo no se pudo leer'); } };
     rd.readAsText(f); ev.target.value='';
   };
@@ -1873,6 +2025,7 @@ function redraw(){
 }
 buildSwatches(); buildSrcPanel(); bind(); renderAlerts();
 preset('laboratorio');   // el montaje del profesor aparece armado al cargar la página
+setSpeed(1);             // ajusta el paso inicial a la señal activa y limpia el barrido anterior
 fitZoom();               // al abrir se ve toda la mesa
 setInterval(renderReadings, 200);
 requestAnimationFrame(animate);
