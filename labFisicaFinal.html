@@ -105,6 +105,52 @@ table.theory{width:100%;border-collapse:collapse;margin-top:8px;font-size:11.5px
 table.theory td{padding:3px 4px;border-bottom:1px solid #232a33;color:var(--ink-faint)}
 table.theory td+td{font-family:var(--mono);color:var(--lcd);text-align:right}
 .mrow button{padding:2px 7px}
+/* Documentación integrada: botón, ficha del ejemplo y ventana del manual */
+.docbtn{margin-left:auto;background:#12333a;border-color:var(--cyan);color:#cdf6fb;font-weight:600}
+header.top .docbtn+.tag{margin-left:8px}
+.pgroup{margin-bottom:7px}
+.pgroup>span{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 4px}
+.pfam{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:3px}
+.ptitle{font-weight:700;font-size:12.5px;line-height:1.4;margin-bottom:6px}
+.pobj{color:var(--ink-dim);font-size:12px;line-height:1.5;margin:0 0 6px}
+.pteo{font-size:12px;line-height:1.55;color:var(--ink-dim)}
+.pteo p{margin:0 0 6px}
+.pteo b{color:var(--ink)}
+.psteps{font-size:12px;line-height:1.5;color:var(--ink-dim);padding-left:18px;margin:8px 0}
+table.theory.exp th{text-align:left;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);font-weight:600;padding:3px 4px;border-bottom:1px solid var(--edge-hi)}
+table.theory.exp td+td{font-family:var(--mono)}
+.diag{margin-top:8px;font-size:11.5px;line-height:1.45}
+.diag div{padding:5px 8px;border:1px solid #4a3a1c;border-radius:5px;color:#f6deb0;margin-bottom:5px;background:#251d0e66}
+.scopeout{font-family:var(--mono);font-size:11px;line-height:1.6;color:var(--ink-dim)}
+.scopeout b{color:var(--lcd)}
+.docs{position:fixed;inset:0;z-index:50;background:#05080bcc;display:flex;align-items:center;justify-content:center;padding:3vh 16px}
+.docs[hidden]{display:none}
+.docs-panel{width:min(1040px,100%);height:100%;background:var(--panel);border:1px solid var(--edge-hi);border-radius:10px;display:flex;flex-direction:column;box-shadow:0 30px 80px #000c}
+.docs-head{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--edge)}
+.docs-head h2{margin:0 12px 0 0;font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+.docs-head .tabs{display:flex;gap:4px;flex-wrap:wrap}
+.docs-head .tabs button.on{background:#12333a;border-color:var(--cyan);color:#cdf6fb}
+.docs-head .x{margin-left:auto}
+.docs-body{overflow:auto;padding:18px 26px 40px;font-size:13.5px;line-height:1.65;color:var(--ink-dim)}
+.docs-body h3{color:var(--ink);font-size:16px;margin:22px 0 8px}
+.docs-body h3:first-child{margin-top:0}
+.docs-body h4{color:var(--amber);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin:18px 0 6px}
+.docs-body b{color:var(--ink)}
+.docs-body table{border-collapse:collapse;width:100%;margin:8px 0 14px;font-size:12.5px}
+.docs-body th{text-align:left;color:var(--ink-faint);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--edge-hi);padding:5px 6px}
+.docs-body td{border-bottom:1px solid #232a33;padding:5px 6px;vertical-align:top}
+.docs-body td.n{font-family:var(--mono);color:var(--lcd);white-space:nowrap}
+.docs-body .card{border:1px solid var(--edge);border-radius:8px;padding:12px 14px;margin:10px 0;background:var(--panel-2)}
+.docs-body .note{border-left:3px solid var(--cyan);background:#12333a55;padding:8px 12px;border-radius:0 6px 6px 0;margin:10px 0}
+.docs-body .eq{font-family:var(--mono);color:var(--lcd);background:#0e1216;border:1px solid var(--edge);border-radius:5px;padding:6px 10px;margin:6px 0;display:inline-block}
+.docs-body svg{max-width:100%;height:auto}
+.docs-tab[hidden]{display:none}
+.docs-body table.theory td{text-align:left}
+.docs-body table.theory td:nth-child(3){font-family:var(--sans);color:var(--ink-dim)}
+header.top{flex-wrap:nowrap}
+header.top .sub{min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+header.top .tag{white-space:nowrap;flex:none}
+@media(max-width:1300px){header.top .sub{display:none}}
 svg#lab{width:1260px;height:auto;display:block;margin:0 auto;background:linear-gradient(180deg,#12171c,#0d1114);
   border:1px solid #2a323b;border-radius:8px;box-shadow:0 24px 60px #0009;touch-action:none}
 .hole{fill:#0e1215;stroke:#6d7178;stroke-width:.7}
@@ -154,6 +200,7 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
 <header class="top">
   <h1>Protoboard · circuitos eléctricos</h1>
   <span class="sub">Circuitos DC y transitorios RLC con generador de señales y osciloscopio virtual</span>
+  <button class="docbtn" id="docBtn" title="Manual del laboratorio y guion de la sustentación">📘 Documentación</button>
   <span class="tag" id="tag">listo</span>
 </header>
 
@@ -165,8 +212,10 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
     <div class="body help-accordion">
       <details><summary>Cables y piezas</summary><p>Clic en dos orificios (o bornes) para tender un cable. Arrastra R, C, L o el interruptor desde el generador a la placa; clic en una pieza para editarla, arrástrala para moverla y suéltala en el generador (o clic derecho) para quitarla. Doble clic abre o cierra un interruptor.</p></details>
       <details><summary>Medir voltaje y corriente</summary><p><b>Voltímetro en paralelo</b>, entre los extremos del componente, con la fuente encendida. <b>Amperímetro en serie</b>: abre el circuito y cierra el hueco con el medidor (en paralelo funde su fusible de 400 mA). Lectura negativa ⇒ puntas invertidas.</p></details>
-      <details><summary>Varias fuentes y medidores</summary><p>Añade fuentes sin límite fijo desde el panel de fuentes. Los botones de medición añaden voltímetros y amperímetros; cada uno tiene bornes propios en la mesa. Selecciona el medidor de CH1 y CH2 para comparar tensión y corriente. Quitar una fuente o medidor elimina sus cables asociados.</p></details>
-      <details><summary>Fase e impedancia en AC</summary><p>Conecta CH1 y CH2 a la tensión y corriente del mismo elemento. Cuando haya dos ciclos completos, el osciloscopio ajusta el primer armónico y estima Δφ(V−I) y |Z|=V<sub>p</sub>/I<sub>p</sub>. Reduce Δt si el residuo del ajuste es alto; en señales cuadradas o triangulares el valor corresponde al armónico fundamental.</p></details>
+      <details><summary>Varias fuentes y medidores</summary><p>Añade fuentes sin límite fijo desde el panel de fuentes. Los botones de medición añaden voltímetros y amperímetros; cada uno tiene bornes propios en la mesa (a la derecha de los instrumentos base). Quitar una fuente o medidor elimina sus cables asociados.</p></details>
+      <details><summary>Medidores en AC</summary><p>Con el generador activo, voltímetros y amperímetros muestran el <b>valor eficaz verdadero (rms)</b> y el pico, como un multímetro en modo AC. Para formas de onda, fase y amplitud instantánea se usa el osciloscopio.</p></details>
+      <details><summary>Osciloscopio</summary><p>CH1 y CH2 pueden ser cualquier voltímetro o amperímetro. V e I del mismo elemento → |Z| y Δφ(V−I). Dos voltímetros (entrada/salida) → ganancia y desfase. Disparo «Único» + «Rearmar» retiene un transitorio y mide τ (63,2 %) o la frecuencia de oscilación.</p></details>
+      <details><summary>Documentación</summary><p>El botón <b>📘 Documentación</b> de la barra superior abre el manual: circuito asignado, ejemplos con teoría y valores esperados, instrumentos, modelo numérico y guion de la sustentación.</p></details>
       <details><summary>Medir R, C y L</summary><p>Óhmetro, capacímetro e inductímetro solo con <b>todas las fuentes apagadas</b>. Si hay otros caminos en paralelo mides el equivalente: levanta una pata para medir la pieza sola.</p></details>
       <details><summary>Zoom y tiempo</summary><p>Usa la lupa (arriba a la derecha de la mesa) o Ctrl + rueda del ratón para acercar o alejar; «Ajustar» muestra toda la mesa. En «Simulación en el tiempo» puedes ir en cámara lenta para ver cargarse el capacitor.</p></details>
     </div>
@@ -198,30 +247,22 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
   </details>
 
   <details class="sect" open>
-    <summary>Circuito de la práctica</summary>
+    <summary>Circuitos de ejemplo y validación</summary>
     <div class="body">
-      <div class="btnrow">
-        <button class="mini" data-preset="laboratorio">Rearmar circuito del profesor</button>
-        <button class="mini" data-preset="rc">Prueba RC</button>
-        <button class="mini" data-preset="rl">Prueba RL</button>
-        <button class="mini" data-preset="rlc">Prueba RLC serie</button>
-        <button class="mini" data-preset="rlcParallel">Prueba RLC paralelo</button>
-        <button class="mini" data-preset="filterLP">Filtro RC pasa-bajas</button>
-        <button class="mini" data-preset="filterHP">Filtro RC pasa-altas</button>
-        <button class="mini" data-preset="dc2">DC con dos fuentes</button>
-        <button class="mini" id="saveJson">Guardar</button>
-        <button class="mini" id="loadJson">Abrir</button>
+      <!-- Botones generados desde PRESETS (circuito asignado, regresión y familias P1–P5 de la guía). -->
+      <div id="presetButtons"></div>
+      <div class="btnrow" style="margin-top:9px">
+        <button class="mini" id="saveJson">Guardar montaje (JSON)</button>
+        <button class="mini" id="loadJson">Abrir montaje</button>
       </div>
       <input type="file" id="fileIn" accept="application/json" style="display:none">
-      <p class="hint">9 V → S1 → R1 (1 kΩ) → R2 (2 kΩ) ‖ C1 (10 µF). Amperímetro en serie tras S1, voltímetro sobre C1. Cierra S1 con doble clic.</p>
-      <table class="theory">
-        <tr><td>I (estable)</td><td>9 V / 3 kΩ = 3 mA</td></tr>
-        <tr><td>V<sub>R1</sub> · V<sub>R2</sub> = V<sub>C1</sub></td><td>3 V · 6 V</td></tr>
-        <tr><td>Q = C·V</td><td>60 µC</td></tr>
-        <tr><td>τ carga</td><td>(R1‖R2)·C = 6,67 ms</td></tr>
-        <tr><td>τ descarga</td><td>R2·C = 20 ms</td></tr>
-      </table>
+      <p class="hint">Cada ejemplo arma la protoboard, conecta los medidores y deja el osciloscopio configurado. Su teoría y valores esperados aparecen abajo, en «Ejemplo cargado».</p>
     </div>
+  </details>
+
+  <details class="sect" open>
+    <summary>Ejemplo cargado · teoría y valores esperados</summary>
+    <div class="body" id="presetDoc"></div>
   </details>
 
   <details class="sect" open>
@@ -266,6 +307,7 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
       </div>
       <div class="btnrow" style="margin-top:8px"><button class="mini" id="addVoltmeter">＋ Voltímetro</button><button class="mini" id="addAmmeter">＋ Amperímetro</button></div>
       <div id="extraMeterControls"></div>
+      <div id="diag" class="diag" aria-live="polite"></div>
       <div class="btnrow" style="margin-top:9px">
         <button class="mini on" id="tgFlow">Flujo de corriente: on</button>
         <button class="mini" id="fuseA" disabled>Cambiar fusible</button>
@@ -291,19 +333,23 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
           <option value="0">Pausa</option>
         </select>
       </div>
-      <div class="row" style="margin-top:8px"><label class="fld" style="flex:1">Paso Δt</label><select id="timeStep" style="flex:1"><option value="auto">Auto · señal y τ</option><option value="0.001">1 ms</option><option value="0.000125">125 µs</option><option value="0.0000625">62,5 µs</option><option value="0.0001">100 µs</option><option value="0.00001">10 µs</option><option value="0.000002">2 µs</option><option value="0.0000005">0,5 µs</option></select></div>
-      <!-- Osciloscopio educativo de dos canales: CH1 mide el voltímetro y CH2 el amperímetro. -->
-      <div class="row" style="margin-top:9px"><label class="fld" style="flex:1">Tiempo/div (s)</label><input id="scopeTimeDiv" type="number" min="0.000001" step="any" value="0.001" style="width:115px"></div>
-      <div class="row"><label class="fld" style="flex:1;color:var(--cyan)">CH1 voltios/div</label><input id="scopeVDiv" type="number" min="0.000001" step="any" value="2" style="width:115px"></div>
-      <div class="row"><label class="fld" style="flex:1;color:var(--amber)">CH2 amperios/div</label><input id="scopeIDiv" type="number" min="0.000001" step="any" value="0.005" style="width:115px"></div>
-      <div class="row"><label class="fld" style="flex:1">Trigger CH1 (V)</label><input id="scopeTrigger" type="number" step="any" value="0" style="width:115px"></div>
-      <div class="row" style="margin-top:8px"><label class="fld" style="flex:1;color:var(--cyan)">CH1 fuente</label><select id="scopeVSource" style="flex:1"><option value="V">Voltímetro 1</option></select></div>
-      <div class="row"><label class="fld" style="flex:1;color:var(--amber)">CH2 fuente</label><select id="scopeASource" style="flex:1"><option value="A">Amperímetro 1</option></select></div>
+      <div class="row" style="margin-top:8px"><label class="fld" style="flex:1">Paso Δt</label><select id="timeStep" style="flex:1"><option value="auto">Auto · τ/50 y T/200</option><option value="0.001">1 ms</option><option value="0.0001">100 µs</option><option value="0.00002">20 µs</option><option value="0.00001">10 µs</option><option value="0.000005">5 µs</option><option value="0.000002">2 µs</option><option value="0.000001">1 µs</option><option value="0.0000005">0,5 µs</option></select></div>
+      <!-- Osciloscopio de dos canales: cada canal muestra cualquier voltímetro o amperímetro. -->
+      <label class="fld" style="margin-top:12px">Osciloscopio</label>
+      <div class="row"><label class="fld" style="flex:1;color:var(--cyan)">CH1</label><select id="scopeVSource" style="flex:2;min-width:0"><option value="V">Voltímetro 1</option></select></div>
+      <div class="row"><label class="fld" style="flex:1;color:var(--amber)">CH2</label><select id="scopeASource" style="flex:2;min-width:0"><option value="A">Amperímetro 1</option></select></div>
+      <div class="row"><label class="fld" style="flex:1">Tiempo/div (s)</label><input id="scopeTimeDiv" type="number" min="0.000001" step="any" value="0.001" style="width:115px"></div>
+      <div class="row"><label class="fld" style="flex:1;color:var(--cyan)" id="lblCh1">CH1 voltios/div</label><input id="scopeVDiv" type="number" min="0.000001" step="any" value="2" style="width:115px"></div>
+      <div class="row"><label class="fld" style="flex:1;color:var(--amber)" id="lblCh2">CH2 amperios/div</label><input id="scopeIDiv" type="number" min="0.000001" step="any" value="0.005" style="width:115px"></div>
+      <div class="row"><label class="fld" style="flex:1" id="lblTrig">Nivel de disparo CH1 (V)</label><input id="scopeTrigger" type="number" step="any" value="0" style="width:115px"></div>
+      <div class="row"><select id="scopeMode" style="flex:1;min-width:0" title="Auto: barrido continuo. Único: retiene la primera captura tras «Rearmar»."><option value="auto">Auto</option><option value="single">Único</option></select>
+        <select id="scopeSlope" style="flex:1;min-width:0"><option value="up">Flanco ↑</option><option value="down">Flanco ↓</option></select>
+        <button class="mini" id="scopeRearm" title="Borra la captura retenida y espera el próximo disparo">Rearmar</button></div>
       <canvas id="trace" height="150"></canvas>
-      <div class="legend"><span class="lv">━ V voltímetro</span><span class="li">━ I amperímetro</span><button class="mini" id="clrTrace" style="margin-left:auto">Limpiar</button></div>
-      <div id="scopeMetrics" class="hint" aria-live="polite">La fase y la impedancia se estiman cuando haya al menos dos ciclos completos en ambos canales.</div>
-      <button class="mini" id="scopeCsv" style="margin-top:7px">Exportar captura temporal CSV</button>
-      <p class="hint">Añade voltímetros y amperímetros sin límite fijo. CH1 y CH2 seleccionan cualquiera y muestran su señal instantánea. La fase y |Z| usan el primer armónico; para interpretar |Z| conecta tensión y corriente en el mismo elemento.</p>
+      <div class="legend"><span class="lv" id="lgd1">━ CH1</span><span class="li" id="lgd2">━ CH2</span><button class="mini" id="clrTrace" style="margin-left:auto">Limpiar</button></div>
+      <div id="scopeMetrics" class="hint scopeout" aria-live="polite"></div>
+      <button class="mini" id="scopeCsv" style="margin-top:7px">Exportar captura (CSV: tiempo, CH1, CH2)</button>
+      <p class="hint">Con V e I del mismo elemento se obtienen |Z| y Δφ(V−I); con dos voltímetros (entrada y salida), la ganancia y el desfase. En DC con disparo «Único» se mide τ por el 63,2 % o la frecuencia de oscilación. Para validar Δt: anota una medida en «Auto», elige un Δt menor a la mitad y compara.</p>
     </div>
   </details>
 
@@ -312,7 +358,7 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
     <div class="body help-accordion">
       <details><summary>Elementos y energía</summary><p>Resistencia: v = R·i y P = i²R. Capacitor: i = C·dv/dt, Q = C·v y U<sub>C</sub> = ½Cv². Inductor: v = L·di/dt y U<sub>L</sub> = ½Li². En DC estable, C se comporta como circuito abierto y L como cortocircuito ideal.</p></details>
       <details><summary>Transitorios y RLC</summary><p>τ<sub>RC</sub> = R<sub>Th</sub>C y τ<sub>RL</sub> = L/R<sub>Th</sub>. Para RLC serie: ω<sub>0</sub> = 1/√(LC), R<sub>crítica</sub> = 2√(L/C); R menor produce respuesta subamortiguada. El tiempo y la frecuencia determinan si el fenómeno queda resuelto por Δt.</p></details>
-      <details><summary>Solución numérica</summary><p>La red usa MNA y eliminación Gaussiana. Capacitores e inductores usan equivalentes compañeros con Euler implícito. Δt automático se adapta a la señal; en cámara lenta también estima la τ más rápida a partir de valores R, C y L conectados. Para aceptar resultados, comparar Δt y Δt/2 y reportar error porcentual contra teoría.</p></details>
+      <details><summary>Solución numérica</summary><p>La red usa MNA y eliminación Gaussiana. Capacitores e inductores usan equivalentes compañeros con Euler implícito. Δt automático = mín(τ<sub>rápida</sub>/50, T/200, 2 ms·velocidad), con τ estimada a partir de los R, C y L conectados (RC, L/R y √(LC)). Para aceptar resultados, comparar Δt y Δt/2 y reportar error porcentual contra teoría.</p></details>
       <p class="hint"><b>Alcance del modelo:</b> componentes concentrados e ideales salvo resistencia interna de fuentes, cables y burden de instrumentos. La fuga numérica a referencia estabiliza nodos flotantes, pero puede alterar redes de resistencia muy alta; matrices singulares detienen las lecturas y generan una alerta para revisar fuentes y conexiones.</p>
     </div>
   </details>
@@ -405,6 +451,226 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
   <g id="lOver"></g>
 </svg>
 </div></div></main>
+</div>
+
+<!-- ============================================================
+     DOCUMENTACIÓN INTEGRADA (se abre con «📘 Documentación»)
+     ============================================================ -->
+<div class="docs" id="docs" hidden role="dialog" aria-modal="true" aria-label="Documentación del laboratorio">
+ <div class="docs-panel">
+  <div class="docs-head">
+    <h2>Documentación</h2>
+    <div class="tabs">
+      <button class="mini" data-doc-tab="asignado">Circuito asignado</button>
+      <button class="mini" data-doc-tab="ejemplos">Ejemplos y validación</button>
+      <button class="mini" data-doc-tab="instrumentos">Instrumentos y paneles</button>
+      <button class="mini" data-doc-tab="modelo">Modelo físico y numérico</button>
+      <button class="mini" data-doc-tab="sustentacion">Guion de sustentación</button>
+    </div>
+    <button class="mini x" id="docClose" title="Cerrar (Esc)">Cerrar ✕</button>
+  </div>
+  <div class="docs-body">
+
+  <!-- ===================== 1. CIRCUITO ASIGNADO ===================== -->
+  <section class="docs-tab" data-doc="asignado">
+    <h3>Circuito asignado: dos resistencias y un condensador</h3>
+    <p>Una batería de <b>9 V</b> alimenta, a través del interruptor <b>S1</b>, la resistencia <b>R1 = 1 kΩ</b> en serie con la rama paralela formada por <b>R2 = 2 kΩ</b> y el condensador electrolítico <b>C1 = 10 µF</b>. Es el montaje que aparece armado al abrir el laboratorio (botón «Circuito del profesor» para volver a armarlo).</p>
+    <svg viewBox="0 0 640 270" role="img" aria-label="Esquema del circuito asignado" style="width:640px;display:block;margin:6px auto 4px">
+      <g fill="none" stroke="#cfd6dd" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M60 120V50H110M170 50H206M234 50H270M350 50H540V126M540 146V240H60V142"/>
+        <path d="M45 125H75M52 137H68" stroke-width="3"/>
+        <path d="M118 50L160 32"/>
+        <path d="M270 50l8-10 16 20 16-20 16 20 16-20 8 10"/>
+        <path d="M420 50V100l-10 8 20 16-20 16 20 16-20 16 10 8V196M420 224V240"/>
+        <path d="M520 126H560" stroke-width="3"/><path d="M520 148Q540 136 560 148" stroke-width="3"/>
+        <path d="M270 50V100H296M324 100H350V50" stroke-dasharray="4 4" stroke="#4fd1e0"/>
+        <path d="M540 90H600V131M600 159V200H540" stroke-dasharray="4 4" stroke="#4fd1e0"/>
+      </g>
+      <g fill="#0e1216" stroke-width="2"><circle cx="114" cy="50" r="4" stroke="#cfd6dd"/><circle cx="166" cy="50" r="4" stroke="#cfd6dd"/>
+        <circle cx="220" cy="50" r="14" stroke="#f0a12e"/><circle cx="420" cy="210" r="14" stroke="#f0a12e"/>
+        <circle cx="310" cy="100" r="14" stroke="#4fd1e0"/><circle cx="600" cy="145" r="14" stroke="#4fd1e0"/></g>
+      <g fill="#cfd6dd"><circle cx="420" cy="50" r="4"/><circle cx="420" cy="240" r="4"/></g>
+      <g font-family="ui-monospace,Consolas,monospace" font-size="12" fill="#cfd6dd" text-anchor="middle">
+        <text x="220" y="54" fill="#f0a12e">A1</text><text x="420" y="214" fill="#f0a12e">A2</text>
+        <text x="310" y="104" fill="#4fd1e0">V2</text><text x="600" y="149" fill="#4fd1e0">V1</text>
+        <text x="30" y="128">9 V</text><text x="80" y="118">+</text>
+        <text x="140" y="24">S1</text><text x="310" y="28">R1 = 1 kΩ</text>
+        <text x="470" y="140">R2 = 2 kΩ</text><text x="540" y="40">C1 = 10 µF</text><text x="566" y="122">+</text>
+        <text x="420" y="38">X</text>
+      </g>
+    </svg>
+    <p style="text-align:center;font-size:12px">A1: corriente total · A2: corriente de R2 · V1: tensión de C1 (= tensión de R2) · V2: tensión de R1</p>
+
+    <h4>Montaje en la protoboard</h4>
+    <table>
+      <tr><th>Elemento</th><th>Orificios</th><th>Conexión</th></tr>
+      <tr><td>Fuente 1 (9 V)</td><td class="n">bornes + y −</td><td>+ → A2 (cable rojo); − → J20 (cable negro)</td></tr>
+      <tr><td>S1</td><td class="n">C2 – C5</td><td>Arranca abierto; doble clic para cerrarlo o abrirlo</td></tr>
+      <tr><td>Amperímetro 1</td><td class="n">A5 → mA · COM → A7</td><td>En serie entre S1 y R1: corriente total</td></tr>
+      <tr><td>R1 = 1 kΩ</td><td class="n">C7 – C12</td><td>A12 → A14 (cable rojo) hacia R2</td></tr>
+      <tr><td>R2 = 2 kΩ</td><td class="n">D14 – G14</td><td>Vertical, cruza el canal central</td></tr>
+      <tr><td>Amperímetro 2</td><td class="n">H14 → mA · COM → H20</td><td>En serie entre R2 y el nodo inferior: corriente de R2</td></tr>
+      <tr><td>C1 = 10 µF</td><td class="n">D20 – G20</td><td>Vertical; borne + arriba (nodo X por el cable amarillo B14 → B20)</td></tr>
+      <tr><td>Voltímetro 1</td><td class="n">A20 · I20</td><td>Sobre C1 (V rojo en el +)</td></tr>
+      <tr><td>Voltímetro 2</td><td class="n">B7 · B12</td><td>Sobre R1</td></tr>
+    </table>
+
+    <h4>Análisis teórico</h4>
+    <div class="card"><b>1. Régimen estable con S1 cerrado.</b> En DC, un capacitor cargado no conduce (i = C·dv/dt = 0): se comporta como circuito abierto. R1 y R2 quedan en serie:<br>
+      <span class="eq">R<sub>eq</sub> = R1 + R2 = 3 kΩ &nbsp;·&nbsp; I = 9 V / 3 kΩ = 3 mA</span><br>
+      <span class="eq">V<sub>R1</sub> = I·R1 = 3 V &nbsp;·&nbsp; V<sub>R2</sub> = V<sub>C1</sub> = I·R2 = 6 V</span><br>
+      Ley de mallas: 3 V + 6 V = 9 V. Ley de nodos en X: I<sub>total</sub> = I<sub>R2</sub> + I<sub>C1</sub> = 3 mA + 0.</div>
+    <div class="card"><b>2. Carga al cerrar S1.</b> Visto desde C1, el resto del circuito es un equivalente de Thévenin:<br>
+      <span class="eq">V<sub>Th</sub> = 9·R2/(R1+R2) = 6 V &nbsp;·&nbsp; R<sub>Th</sub> = R1‖R2 = 666,7 Ω &nbsp;·&nbsp; τ<sub>c</sub> = R<sub>Th</sub>·C = 6,67 ms</span><br>
+      <span class="eq">v<sub>C</sub>(t) = 6 V·(1 − e<sup>−t/τ</sup>) &nbsp;·&nbsp; i<sub>total</sub>(t) = (9 − v<sub>C</sub>)/R1 = 3 mA + 6 mA·e<sup>−t/τ</sup></span><br>
+      En t = 0⁺ el capacitor descargado actúa como cortocircuito: la corriente total es 9 V/1 kΩ = 9 mA y R2 no conduce. En t = τ, v<sub>C</sub> = 63,2 % de 6 V = 3,79 V. Tras 5τ ≈ 33 ms el circuito está prácticamente estable (99,3 %).</div>
+    <div class="card"><b>3. Descarga al abrir S1.</b> La fuente y R1 quedan desconectadas; C1 se descarga solo a través de R2:<br>
+      <span class="eq">τ<sub>d</sub> = R2·C = 20 ms &nbsp;·&nbsp; v<sub>C</sub>(t) = 6 V·e<sup>−t/τ</sup> &nbsp;·&nbsp; i<sub>R2</sub>(0⁺) = 6 V/2 kΩ = 3 mA</span><br>
+      Las constantes de tiempo son distintas porque la resistencia que «ve» el capacitor cambia: R1‖R2 al cargar, solo R2 al descargar. A1 marca 0 de inmediato; A2 muestra la corriente de descarga, que ahora sale de C1.</div>
+    <div class="card"><b>4. Carga, energía y potencia.</b>
+      <span class="eq">Q = C·V = 60 µC &nbsp;·&nbsp; U = ½·C·V² = 180 µJ</span>
+      <span class="eq">P<sub>R1</sub> = 9 mW · P<sub>R2</sub> = 18 mW · P<sub>fuente</sub> = 27 mW</span><br>
+      Durante la descarga, los 180 µJ almacenados se disipan completamente en R2.</div>
+
+    <h4>Valores esperados</h4>
+    <div id="docLabTable"></div>
+    <div class="note">Las lecturas difieren de la teoría ideal en la cuarta cifra porque el modelo incluye la resistencia interna de la fuente (0,5 Ω), la de los amperímetros (0,1 Ω), la de los cables (0,02 Ω) y la impedancia del voltímetro (10 MΩ). Con Δt = τ/50, el método de Euler implícito da una τ alrededor de 1 % mayor (ver «Modelo físico y numérico»), dentro del criterio de 2 % para transitorios.</div>
+
+    <h4>Demostración paso a paso</h4>
+    <ol>
+      <li>Con S1 abierto, todos los medidores marcan ≈ 0 (no hay camino cerrado desde la fuente).</li>
+      <li><b>Doble clic sobre S1.</b> Los medidores sobrepasan su valor, oscilan y se estabilizan en ≈ 3 mA (A1 y A2), 6 V (V1) y 3 V (V2). Anotar con «＋».</li>
+      <li>El osciloscopio ya está en <b>disparo único</b> (CH1 = V1, CH2 = A1, 5 ms/div, nivel 3 V, flanco ↑): retiene la curva de carga y muestra <b>τ medido ≈ 6,7 ms</b>. En CH2 se ve el salto de la corriente a 9 mA y su caída a 3 mA.</li>
+      <li><b>Descarga:</b> elegir flanco ↓, tiempo/div = 20 ms, pulsar <b>Rearmar</b> y abrir S1 (doble clic). τ medido ≈ 20 ms.</li>
+      <li><b>Ley de nodos durante la carga:</b> poner CH2 = Amperímetro 2 y comparar con A1; la diferencia es la corriente de C1, que se anula en régimen estable.</li>
+      <li><b>Variación de parámetros:</b> seleccionar C1 y cambiarlo a 20 µF → las dos τ se duplican; cambiar R2 a 1 kΩ → V<sub>C</sub> = 4,5 V y τ<sub>c</sub> = 5 ms.</li>
+      <li>Activar «Análisis (modo docente)» para mostrar Q, U, potencias y τ ≈ R<sub>Th</sub>·C calculadas por el simulador.</li>
+    </ol>
+    <div class="note"><b>¿Por qué oscilan las lecturas si un RC no oscila?</b> El circuito RC es de primer orden: su respuesta es exponencial y nunca oscila. La oscilación es la del <b>instrumento</b>: la lectura de voltímetros y amperímetros sigue un sistema de 2.º orden subamortiguado (ω<sub>0</sub> = 2π rad/s, ζ = 0,3), como la aguja de un medidor analógico al asentarse. El osciloscopio muestra el valor real del circuito, sin esa oscilación.</div>
+  </section>
+
+  <!-- ===================== 2. EJEMPLOS Y VALIDACIÓN ===================== -->
+  <section class="docs-tab" data-doc="ejemplos" hidden>
+    <h3>Ejemplos y protocolo de validación</h3>
+    <p>Los ejemplos siguen el protocolo de la guía del proyecto: cinco familias (P1 RC, P2 RL, P3 RLC serie, P4 AC y P5 DC con varias fuentes) más los cuatro circuitos del simulador base (serie, paralelo, mixto y divisor), que son las <b>pruebas de regresión</b>: deben dar siempre el mismo resultado. Cada ejemplo conecta los medidores necesarios para medir tensión y corriente en al menos dos elementos y deja el osciloscopio configurado.</p>
+    <div class="note"><b>Error porcentual:</b> e = |valor simulado − valor teórico| / |valor teórico| × 100 %. <b>Criterio de aceptación</b> (propuesto en la guía): e &lt; 1 % en régimen estable y e &lt; 2 % en transitorios. Para cada prueba: esquema, cálculo teórico, tabla simulado/teórico/error, captura del osciloscopio y un breve análisis.</div>
+    <div id="docPresets"></div>
+  </section>
+
+  <!-- ===================== 3. INSTRUMENTOS Y PANELES ===================== -->
+  <section class="docs-tab" data-doc="instrumentos" hidden>
+    <h3>Instrumentos</h3>
+    <table>
+      <tr><th>Instrumento</th><th>Conexión</th><th>Modelo</th><th>Lectura</th></tr>
+      <tr><td><b>Voltímetro</b> (los que se quieran)</td><td>En paralelo</td><td>Resistencia de 10 MΩ entre sus bornes</td><td>DC con asentamiento; en AC, valor eficaz (rms) y pico</td></tr>
+      <tr><td><b>Amperímetro</b> (los que se quieran)</td><td>En serie (abrir el circuito)</td><td>Resistencia de 0,1 Ω, fusible de 400 mA</td><td>Igual que el voltímetro. En paralelo funde el fusible</td></tr>
+      <tr><td><b>Óhmetro</b></td><td>Fuentes apagadas</td><td>Inyecta 1 mA y mide la tensión</td><td>Resistencia equivalente entre las puntas; O.L si está abierto</td></tr>
+      <tr><td><b>Capacímetro / inductímetro</b></td><td>Fuentes apagadas</td><td>Red equivalente de C o de L</td><td>Valor equivalente entre las puntas</td></tr>
+      <tr><td><b>Osciloscopio</b> (2 canales)</td><td>CH1 y CH2 = cualquier voltímetro o amperímetro</td><td>Muestra la señal instantánea del medidor</td><td>Retícula 10 × 8, tiempo/div, escala por canal, disparo, mediciones automáticas</td></tr>
+    </table>
+    <h4>Osciloscopio</h4>
+    <ul>
+      <li><b>Canales:</b> cada canal toma la señal de un medidor de la mesa. Con V e I del mismo elemento → |Z| = V<sub>p</sub>/I<sub>p</sub> y Δφ(V−I) (positivo: inductivo; negativo: capacitivo). Con dos voltímetros (entrada y salida) → ganancia CH2/CH1 en veces y en dB, y Δφ.</li>
+      <li><b>Escalas:</b> tiempo/div (10 divisiones horizontales) y unidades/div de cada canal (8 divisiones verticales, tierra en el centro, marcada como GND).</li>
+      <li><b>Disparo:</b> nivel y flanco (↑/↓) sobre CH1, con 2 divisiones de pre-disparo. «Auto» sincroniza un barrido continuo; «Único» retiene la primera captura después de «Rearmar», como el modo <i>single</i> de un osciloscopio real: sirve para transitorios.</li>
+      <li><b>Mediciones automáticas:</b> en DC, τ por el criterio del 63,2 % (si la curva es monótona y llegó a su valor final) o la frecuencia de oscilación amortiguada (si hay sobrepaso). En AC, ajuste del primer armónico de cada canal; equivale a medir el Δt entre cruces por cero (φ = 360°·f·Δt). Si el residuo del ajuste supera 15 %, la señal no es senoidal o aún está en transitorio.</li>
+      <li><b>Exportar captura:</b> CSV con tiempo, CH1 y CH2 (la captura retenida si existe) para analizar en hoja de cálculo.</li>
+    </ul>
+    <h4>Generador de señales</h4>
+    <p>Convierte una de las fuentes en generador: DC, senoidal, cuadrada (con ciclo útil) o triangular, con amplitud pico, frecuencia (1 Hz – 20 kHz) y nivel DC. Conserva la resistencia interna de la fuente (0,5 Ω) y su límite de corriente. Una onda cuadrada de 0 a 5 V se obtiene con amplitud 2,5 V y nivel DC 2,5 V.</p>
+    <h4>Paneles laterales</h4>
+    <table>
+      <tr><th>Panel</th><th>Para qué sirve</th></tr>
+      <tr><td>Herramientas</td><td>Conectar o borrar cables, color, orientación y longitud de piezas nuevas, vaciar la protoboard.</td></tr>
+      <tr><td>Circuitos de ejemplo y validación</td><td>Arma cada circuito del protocolo; guardar y abrir montajes en JSON (incluye generador, medidores y osciloscopio).</td></tr>
+      <tr><td>Ejemplo cargado</td><td>Teoría, valores esperados y pasos del ejemplo activo.</td></tr>
+      <tr><td>Fuentes de tensión DC</td><td>Encender/apagar, ajustar (deslizador o valor exacto), añadir o quitar fuentes, fuentes ideales.</td></tr>
+      <tr><td>Generador de señales</td><td>Forma de onda y parámetros sobre la fuente elegida.</td></tr>
+      <tr><td>Componente seleccionado</td><td>Valor con prefijo (p, n, µ, m, k, M), especificación nominal, bandas de color, longitud y orientación.</td></tr>
+      <tr><td>Mediciones</td><td>Lecturas de todos los medidores, añadir/quitar voltímetros y amperímetros, registro de medidas y CSV, <b>diagnóstico del montaje</b> (patas sueltas y partes sin fuente).</td></tr>
+      <tr><td>Simulación en el tiempo</td><td>Velocidad (1×, 0,1×, 0,01×, pausa), paso Δt y osciloscopio.</td></tr>
+      <tr><td>Guía de medición</td><td>Pasos para conectar cada instrumento a una pieza; puede hacer la conexión automáticamente.</td></tr>
+      <tr><td>Análisis (modo docente)</td><td>Tensión, corriente, potencia, carga, energía y τ de cada elemento; f<sub>0</sub>, ζ y Q si hay un par L-C.</td></tr>
+      <tr><td>Alertas de seguridad</td><td>Cortocircuitos bloqueados, fusibles fundidos, piezas quemadas, fuentes disparadas, red sin solución.</td></tr>
+    </table>
+    <h4>Seguridad y casos límite</h4>
+    <ul>
+      <li>Se bloquea cualquier conexión que una directamente los bornes de una fuente encendida (cables, interruptores, inductores o amperímetros).</li>
+      <li>Una resistencia que supera su potencia, un capacitor que supera su tensión o un electrolítico polarizado al revés se queman y quedan como circuito abierto.</li>
+      <li>Fuentes ideales en conflicto (matriz singular): el simulador detiene las lecturas y genera una alerta, en lugar de mostrar valores falsos.</li>
+      <li>Patas sin conectar y partes del circuito sin conexión a ninguna fuente encendida (nodos flotantes) se informan en «Mediciones».</li>
+    </ul>
+  </section>
+
+  <!-- ===================== 4. MODELO FÍSICO Y NUMÉRICO ===================== -->
+  <section class="docs-tab" data-doc="modelo" hidden>
+    <h3>Modelo físico</h3>
+    <table>
+      <tr><th>Elemento</th><th>Ecuación</th><th>Energía / potencia</th><th>En DC estable</th></tr>
+      <tr><td>Resistencia</td><td class="n">v = R·i</td><td class="n">P = i²R</td><td>—</td></tr>
+      <tr><td>Capacitor</td><td class="n">i = C·dv/dt</td><td class="n">U = ½Cv², Q = Cv</td><td>Circuito abierto</td></tr>
+      <tr><td>Inductor</td><td class="n">v = L·di/dt</td><td class="n">U = ½Li²</td><td>Cortocircuito</td></tr>
+      <tr><td>Fuente</td><td class="n">V(t) en serie con 0,5 Ω</td><td class="n">P = V·I</td><td>—</td></tr>
+    </table>
+    <p><b>Transitorios:</b> τ<sub>RC</sub> = R<sub>Th</sub>·C, τ<sub>RL</sub> = L/R<sub>Th</sub>. <b>RLC serie:</b> ω<sub>0</sub> = 1/√(LC), α = R/2L, ζ = α/ω<sub>0</sub>, R<sub>crítica</sub> = 2√(L/C), Q = ω<sub>0</sub>L/R; ζ &lt; 1 subamortiguado (oscila con ω<sub>d</sub> = √(ω<sub>0</sub>² − α²)), ζ = 1 crítico, ζ &gt; 1 sobreamortiguado. <b>AC:</b> Z<sub>R</sub> = R, Z<sub>L</sub> = jωL, Z<sub>C</sub> = 1/(jωC); filtro RC de primer orden con f<sub>c</sub> = 1/(2πRC).</p>
+
+    <h3>Modelo numérico</h3>
+    <div class="card"><b>Análisis nodal modificado (MNA).</b> Por cada nodo se escribe la ley de corrientes de Kirchhoff y por cada fuente de tensión una ecuación adicional (su corriente es incógnita). Cables y tiras internas de la protoboard se agrupan en nodos con una estructura <i>union-find</i>. El sistema lineal G·x = b se resuelve por eliminación gaussiana con pivoteo parcial. Una conductancia de fuga de 1/(10⁹ Ω) a la referencia evita que nodos flotantes dejen la matriz singular.</div>
+    <div class="card"><b>Modelos compañeros (Euler implícito).</b> En cada paso Δt cada elemento reactivo se reemplaza por una conductancia y una fuente de corriente que recuerda el paso anterior:<br>
+      <span class="eq">Capacitor: i<sub>n</sub> = (C/Δt)·(v<sub>n</sub> − v<sub>n−1</sub>) → G = C/Δt, I<sub>hist</sub> = (C/Δt)·v<sub>n−1</sub></span><br>
+      <span class="eq">Inductor: i<sub>n</sub> = i<sub>n−1</sub> + (Δt/L)·v<sub>n</sub> → G = Δt/L, I<sub>hist</sub> = i<sub>n−1</sub></span><br>
+      El método es incondicionalmente estable: no diverge aunque Δt sea grande.</div>
+    <div class="card"><b>Paso de tiempo.</b> En automático, Δt = mín(τ<sub>rápida</sub>/50, T/200, 2 ms × velocidad), con límite inferior de 0,5 µs. τ<sub>rápida</sub> se estima de forma conservadora con todas las R en paralelo (para C), en serie (para L) y √(LC) para cada par L-C. Cada actualización tiene un presupuesto de cómputo de 40 ms: si Δt es muy fino, la simulación va más lenta que el reloj (la barra superior lo indica), pero sigue siendo exacta.<br>
+      <b>Error del método:</b> Euler implícito reproduce una exponencial con τ<sub>efectiva</sub> = Δt / ln(1 + Δt/τ). Con Δt = τ/50 el error en τ es ≈ +1,0 %; con Δt = τ/100, ≈ +0,5 % (el error es proporcional a Δt). En oscilaciones (RLC) agrega un amortiguamiento numérico α<sub>num</sub> ≈ ω<sub>0</sub>²Δt/2.<br>
+      <b>Verificación:</b> repetir una medida con Δt y con Δt/2 (selector «Paso Δt»); si el resultado casi no cambia, Δt es suficiente.</div>
+    <div class="card"><b>Mediciones.</b> El voltímetro es una resistencia de 10 MΩ y el amperímetro una de 0,1 Ω, ambos dentro de la red: el simulador incluye su efecto de carga. La lectura AC rms integra v² durante un número entero de periodos (≈ 20 ms, o un periodo si es más largo). La fase y la amplitud del osciloscopio se obtienen por mínimos cuadrados con a·sen(ωt) + b·cos(ωt) + c. El ruido de lectura es de ≈ 0,5 % (DC) y ≈ 0,3 % (AC).</div>
+    <h4>Idealizaciones y límites</h4>
+    <ul>
+      <li>Componentes concentrados e ideales: el inductor no tiene resistencia de bobinado ni el capacitor fuga (salvo para el óhmetro, que ve 0,1 Ω en una bobina).</li>
+      <li>No se modelan la tolerancia real de las piezas (las bandas solo indican el valor), la temperatura ni efectos de alta frecuencia (capacitancias parásitas de la protoboard).</li>
+      <li>Diferencias con un laboratorio real: bobinas con decenas de ohmios, condensadores electrolíticos con tolerancia de ±20 %, instrumentos con resolución finita y fuentes que no absorben corriente.</li>
+    </ul>
+  </section>
+
+  <!-- ===================== 5. GUION DE SUSTENTACIÓN ===================== -->
+  <section class="docs-tab" data-doc="sustentacion" hidden>
+    <h3>Guion de la sustentación (20 min + 5 de preguntas)</h3>
+    <table>
+      <tr><th>Tiempo</th><th>Bloque</th><th>Contenido y acción en el laboratorio</th><th>Responsable</th></tr>
+      <tr><td class="n">0–2</td><td>Introducción</td><td>Objetivo del proyecto: ampliar el simulador DC con C, L, generador, medidores ilimitados y osciloscopio, y validarlo contra la teoría.</td><td>Integrante 1</td></tr>
+      <tr><td class="n">2–5</td><td>Recorrido del simulador</td><td>Mesa, protoboard, fuentes, generador, medidores y osciloscopio. Mostrar cómo se añade un voltímetro y cómo se mueve una pieza.</td><td>Integrante 2</td></tr>
+      <tr><td class="n">5–12</td><td><b>Circuito asignado</b></td><td>Esquema y teoría (estable, carga, descarga). Demostración en vivo: cerrar S1, lecturas que se estabilizan en 3 mA / 6 V / 3 V; captura de carga con τ ≈ 6,67 ms; descarga con τ ≈ 20 ms; ley de nodos con A1 y A2; energía de 180 µJ.</td><td>Integrantes 1 y 3</td></tr>
+      <tr><td class="n">12–16</td><td>Validación</td><td>Un ejemplo por familia: RC (τ), RLC subamortiguado (f<sub>d</sub>), filtro pasa-bajas (−3 dB, −45°), dos mallas (Kirchhoff y balance de potencia). Tabla de errores frente al criterio 1 % / 2 %.</td><td>Integrante 4</td></tr>
+      <tr><td class="n">16–19</td><td>Modelo numérico</td><td>MNA, modelos compañeros, elección de Δt, error de Euler implícito (≈ 1 % con τ/50), idealizaciones.</td><td>Integrante 2</td></tr>
+      <tr><td class="n">19–20</td><td>Cierre</td><td>Conclusiones, trabajo futuro y declaración de las herramientas de apoyo usadas (incluida la IA) y de cómo se verificó el código.</td><td>Integrante 3</td></tr>
+    </table>
+    <div class="note"><b>Antes de empezar:</b> abrir el archivo, pulsar «Circuito del profesor», comprobar que el osciloscopio dice «ÚNICO · esperando disparo», cerrar las secciones del panel que no se usarán y tener esta documentación abierta en la pestaña «Circuito asignado».</div>
+
+    <h4>Preguntas probables sobre el circuito asignado</h4>
+    <div class="card"><b>¿Por qué τ de carga y de descarga son distintas?</b> Porque τ = R<sub>Th</sub>·C y la resistencia de Thévenin vista por C1 cambia: al cargar es R1‖R2 = 666,7 Ω (la fuente ideal es un cortocircuito para el cálculo de R<sub>Th</sub>); al descargar, con S1 abierto, solo queda R2 = 2 kΩ.</div>
+    <div class="card"><b>¿Por qué la corriente inicial es 9 mA y no 3 mA?</b> En t = 0⁺ el capacitor está descargado y su tensión no puede cambiar instantáneamente: actúa como un cortocircuito que anula a R2, y toda la tensión cae en R1 (9 V / 1 kΩ).</div>
+    <div class="card"><b>¿Por qué C1 no llega a 9 V?</b> Porque en régimen estable está en paralelo con R2, que forma un divisor con R1: V<sub>C1</sub> = 9·2/3 = 6 V. Si se quitara R2, C1 llegaría a 9 V.</div>
+    <div class="card"><b>¿Las lecturas oscilan porque el circuito oscila?</b> No. El RC es de primer orden y su respuesta es exponencial; la oscilación es la dinámica del instrumento (como una aguja), y el osciloscopio muestra el valor real sin oscilación.</div>
+    <div class="card"><b>¿Qué pasa con la energía?</b> C1 almacena ½CV² = 180 µJ. Al descargar, toda esa energía se disipa en R2. Durante la carga, la fuente además entrega potencia continuamente a R1 y R2 (27 mW en régimen estable).</div>
+    <div class="card"><b>¿Cuánto error tiene el simulador?</b> En régimen estable, menos de 0,05 % (por resistencias internas y medidores reales). En transitorios, ≈ 1 % en τ por el método de Euler implícito con Δt = τ/50, que baja a la mitad al reducir Δt a la mitad.</div>
+    <div class="card"><b>¿Qué pasa si se conecta C1 al revés?</b> Es electrolítico: con más de 1 V de polarización inversa el simulador lo marca como quemado y lo deja como circuito abierto.</div>
+
+    <h4>Preguntas orientadoras de la guía (respuestas cortas)</h4>
+    <ul>
+      <li><b>Kirchhoff y potencia:</b> se verifican con los ejemplos de dos mallas (4 − 1 = 3 mA; 40 − 5 = 35 mW) y en el circuito asignado (3 + 6 = 9 V).</li>
+      <li><b>C y L en DC:</b> en t = 0⁺, C es un cortocircuito y L un circuito abierto; en régimen estable al revés. Lo muestran los ejemplos RC, RL y «Dos mallas con C y L».</li>
+      <li><b>τ en el osciloscopio:</b> tiempo hasta 63,2 % del cambio total; el simulador lo mide automáticamente en disparo único.</li>
+      <li><b>RLC:</b> R &lt; 200 Ω subamortiguado, R = 200 Ω crítico, R &gt; 200 Ω sobreamortiguado (L = 10 mH, C = 1 µF). f<sub>d</sub> medida ≈ 1 583 Hz frente a f<sub>0</sub> = 1 592 Hz; R controla el decaimiento (α = R/2L) y Q.</li>
+      <li><b>Resonancia:</b> en serie la corriente es máxima y Δφ = 0; en paralelo (tanque) la corriente es mínima y la tensión máxima.</li>
+      <li><b>Impedancia y fase:</b> |Z<sub>C</sub>| = 1/(ωC) baja con la frecuencia, |Z<sub>L</sub>| = ωL sube; el osciloscopio mide |Z| y Δφ (−90° ideal en C, +90° en L).</li>
+      <li><b>Filtros:</b> f<sub>c</sub> = 159 Hz; en f<sub>c</sub> la salida es 0,707 de la entrada (−3 dB) con ∓45°.</li>
+      <li><b>Paso de tiempo:</b> al reducir Δt a la mitad el error en τ se reduce a la mitad (método de primer orden); deja de mejorar cuando domina el ruido de lectura (≈ 0,5 %).</li>
+      <li><b>Trabajo futuro:</b> método trapezoidal (más preciso), diagrama de Bode automático, modo X-Y (figuras de Lissajous), cursores en el osciloscopio, resistencia de bobinado de los inductores.</li>
+    </ul>
+  </section>
+
+  </div>
+ </div>
 </div>
 
 <script>
@@ -547,10 +813,25 @@ function buildWaveSourceOptions(selected=st.wave.source){
   el.value=String(Math.min(st.srcs.length-1,Math.max(0,+selected||0)));
   st.wave.source=+el.value;
 }
+// Osciloscopio: cada canal puede mostrar cualquier voltímetro o amperímetro. Con dos
+// voltímetros se comparan entrada y salida (ganancia y desfase de un filtro); con V e I
+// del mismo elemento se obtienen |Z| y el ángulo de fase.
+st.scope={mode:'auto',slope:'up',frozen:null,armedAt:0};
+const meterLabel=id=>(meterType(id)==='V'?'Voltímetro ':'Amperímetro ')+(id.slice(1)||'1');
+const chId=n=>L(n===1?'scopeVSource':'scopeASource')?.value||(n===1?'V':'A');
+const chUnit=n=>meterType(chId(n))==='V'?'V':'A';
 function buildScopeOptions(v=L('scopeVSource')?.value||'V',a=L('scopeASource')?.value||'A'){
-  const fill=(el,ids,kind,label)=>{el.innerHTML=ids.map(id=>`<option value="${id}">${label} ${id.slice(1)||'1'}</option>`).join('');el.value=ids.includes(v)&&kind==='V'?v:ids.includes(a)&&kind==='A'?a:ids[0];};
-  fill(L('scopeVSource'),meterIds('V'),'V','Voltímetro');
-  fill(L('scopeASource'),meterIds('A'),'A','Amperímetro');
+  const ids=[...meterIds('V'),...meterIds('A')];
+  const fill=(el,want)=>{el.innerHTML=ids.map(id=>`<option value="${id}">${meterLabel(id)}</option>`).join('');el.value=ids.includes(want)?want:ids[0];};
+  fill(L('scopeVSource'),v); fill(L('scopeASource'),a);
+  scopeLabels();
+}
+function scopeLabels(){
+  const name=u=>u==='V'?'voltios':'amperios';
+  if(!L('lblCh1')) return;
+  L('lblCh1').textContent=`CH1 ${name(chUnit(1))}/div`; L('lblCh2').textContent=`CH2 ${name(chUnit(2))}/div`;
+  L('lblTrig').textContent=`Nivel de disparo CH1 (${chUnit(1)})`;
+  L('lgd1').textContent=`━ CH1 · ${meterLabel(chId(1))}`; L('lgd2').textContent=`━ CH2 · ${meterLabel(chId(2))}`;
 }
 function addExtraMeter(kind){
   if(!['V','A'].includes(kind))return;
@@ -760,42 +1041,89 @@ function solveTransient(){
   let vmin=0,vmax=0; for(let i=0;i<n;i++){vmin=Math.min(vmin,x[i]);vmax=Math.max(vmax,x[i]);}
   st.transient.time+=dt;
   recordTrace(V);
+  acAccumulate(V);
   return {V, srcI, find, branchI, time:st.transient.time, vspan:vmax-vmin};
 }
+// Lectura instantánea de un voltímetro (V) o amperímetro (A) a partir de la solución
+// nodal; null si el medidor no está conectado o su fusible está fundido.
+function meterSample(id,V){
+  if(!id||!PT[`M${id}r`]||!connected(id)) return null;
+  if(meterType(id)==='A'&&meterFused(id)) return null;
+  const d=V(`M${id}r`)-V(`M${id}b`);
+  return meterType(id)==='V'?d:d/BURDEN;
+}
+// Muestreo del osciloscopio: CH1 y CH2 pueden ser cualquier voltímetro o amperímetro.
+// El periodo de muestreo es div/50 (500 puntos por pantalla) y, en AC, al menos 40 por ciclo.
 function recordTrace(V){
-  const T=st.transient, tr=st.trace, win=Math.max(TRACE_WALL*Math.max(T.speed,1e-3),10*(+L('scopeTimeDiv')?.value||.001));
+  const T=st.transient, tr=st.trace, div=Math.max(1e-6,+L('scopeTimeDiv')?.value||.001);
   const last=tr[tr.length-1];
   if(last&&T.time<last.t) tr.length=0;                       // el tiempo se reinició
-  const samplePeriod=st.wave.kind==='dc'?win/600:1/(Math.max(1,+st.wave.freq||1)*20);
+  let samplePeriod=div/50;
+  if(st.wave.kind!=='dc') samplePeriod=Math.min(samplePeriod,1/(Math.max(1,+st.wave.freq||1)*40));
   if(last&&T.time-last.t<samplePeriod) return;
-  tr.push({t:T.time,
-    v:(()=>{const id=L('scopeVSource')?.value||'V';return connected(id)?V(`M${id}r`)-V(`M${id}b`):null;})(),
-    i:(()=>{const id=L('scopeASource')?.value||'A';return connected(id)&&!meterFused(id)?(V(`M${id}r`)-V(`M${id}b`))/BURDEN:null;})()});
-  // Retención acotada para que un barrido largo no consuma memoria sin límite.
-  while(tr.length>20000||tr.length&&tr[0].t<T.time-win) tr.shift();
+  tr.push({t:T.time, v:meterSample(L('scopeVSource')?.value,V), i:meterSample(L('scopeASource')?.value,V)});
+  // Disparo «Único»: se detecta el flanco en CH1 al muestrear y, cuando hay 8 divisiones
+  // posteriores, se congela la ventana (independiente de la frecuencia de dibujo).
+  const sc=st.scope;
+  if(sc&&sc.mode==='single'&&!sc.frozen){
+    const p=tr[tr.length-1], q=tr[tr.length-2], trig=+L('scopeTrigger')?.value||0, up=sc.slope!=='down';
+    if(sc.edge==null&&q&&p.t>sc.armedAt&&q.v!=null&&p.v!=null&&(up?(q.v<trig&&p.v>=trig):(q.v>trig&&p.v<=trig))) sc.edge=p.t;
+    if(sc.edge!=null&&T.time>=sc.edge+8*div){ const a=sc.edge-2*div; sc.frozen={t0:a,edge:sc.edge,samples:tr.filter(x=>x.t>=a&&x.t<=a+10*div)}; sc.edge=null; }
+  }
+  // Retención: 30 divisiones (3 pantallas) y como máximo 20 000 muestras; se recorta por bloques.
+  const keep=Math.max(30*div, st.wave.kind!=='dc'?6/Math.max(1,+st.wave.freq||1):0);
+  if(tr.length>20000||(tr.length>1000&&tr[0].t<T.time-1.5*keep)){
+    let k=0; while(k<tr.length&&(tr[k].t<T.time-keep||tr.length-k>20000)) k++;
+    tr.splice(0,k);
+  }
 }
-// Avanza la simulación al ritmo del reloj × velocidad. El paso Δt escala con la
-// velocidad para que en cámara lenta la curva de carga tenga buena resolución.
+// Medición AC verdadera (true RMS): con el generador activo, cada voltímetro y amperímetro
+// integra v² durante un número entero de periodos y muestra el valor eficaz y el pico.
+const acAcc={}, acRes={};
+function acActive(){ return st.wave.kind!=='dc'&&st.srcs.some(s=>s.on&&s.i===st.wave.source); }
+function acAccumulate(V){
+  if(!acActive()) return;
+  const T=st.transient, per=1/Math.max(1,+st.wave.freq||1), win=per*Math.max(1,Math.floor(0.02/per));
+  for(const id of [...meterIds('V'),...meterIds('A')]){
+    const x=meterSample(id,V);
+    if(x==null){ delete acAcc[id]; delete acRes[id]; continue; }
+    if(acAcc[id]&&T.time<acAcc[id].t0) delete acAcc[id];        // el tiempo se reinició
+    const a=acAcc[id]||(acAcc[id]={s:0,s2:0,n:0,max:-Infinity,min:Infinity,t0:T.time});
+    a.s+=x; a.s2+=x*x; a.n++; a.max=Math.max(a.max,x); a.min=Math.min(a.min,x);
+    if(T.time-a.t0>=win-1e-12){
+      acRes[id]={rms:Math.sqrt(a.s2/a.n), mean:a.s/a.n, pk:(a.max-a.min)/2, t:T.time};
+      delete acAcc[id];
+    }
+  }
+}
+// Paso de tiempo automático (criterio de la guía del proyecto): Δt ≤ τ/50 de la escala
+// más rápida del circuito y Δt ≤ T/200 si hay señal periódica. En cámara lenta también
+// Δt ≤ 2 ms·velocidad para que la curva se vea continua. Límite inferior: 0,5 µs.
+function computeDt(sp){
+  const choice=L('timeStep')?.value||'auto';
+  if(choice!=='auto') return Math.max(5e-7,+choice);
+  const signalDt=st.wave.kind==='dc'?Infinity:1/(Math.max(1,+st.wave.freq||1)*200);
+  const tauDt=fastestEstimatedTau()/50;
+  return Math.max(5e-7,Math.min(0.002*Math.max(sp,1e-3),signalDt,tauDt));
+}
 function setSpeed(sp){
   const T=st.transient; T.speed=sp; T.accum=0; T.lastWall=performance.now();
-  // En automático se toma el menor entre el paso base escalado y T/80 de la señal.
-  // En manual se respeta la elección con un límite inferior de 0,5 µs por estabilidad práctica.
-  if(sp>0){const choice=L('timeStep')?.value||'auto';
-    const signalDt=1/(Math.max(1,+st.wave.freq||1)*80);
-    const tauDt=sp<=0.01?fastestEstimatedTau()/20:Infinity;
-    T.dt=choice==='auto'?Math.max(5e-7,Math.min(0.002*sp,signalDt,tauDt)):Math.max(5e-7,+choice);}
-  st.trace.length=0;
+  if(sp>0) T.dt=computeDt(sp);
+  st.trace.length=0; if(st.scope){ st.scope.frozen=null; st.scope.edge=null; }st.scope.edge=null;
 }
-// Estimación conservadora, no sustituto de RTh de la topología. Para RC se
-// aproxima Req con todas las R en paralelo; para RL se usa su suma como límite
-// conservador de la resistencia serie. El fin es resolver la escala temporal más rápida.
+// Estimación conservadora de la escala de tiempo más rápida (no sustituye a R_Th):
+// RC con todas las R en paralelo, RL con todas en serie y √(LC) para cada par L-C.
 function fastestEstimatedTau(){
   const rs=Object.values(st.res).filter(r=>r.a&&r.b&&!r.burned).map(r=>Math.max(1e-3,+r.value||1000));
-  if(!rs.length)return Infinity;
-  const rParallel=1/rs.reduce((sum,r)=>sum+1/r,0), rSeries=rs.reduce((sum,r)=>sum+r,0);
+  const cs=Object.values(st.caps).filter(c=>c.a&&c.b&&!c.burned).map(c=>Math.max(1e-12,+c.value||1e-6));
+  const ls=Object.values(st.inds).filter(l=>l.a&&l.b&&!l.burned).map(l=>Math.max(1e-9,+l.value||1e-3));
   let tau=Infinity;
-  for(const c of Object.values(st.caps))if(c.a&&c.b&&!c.burned)tau=Math.min(tau,rParallel*Math.max(1e-12,+c.value||1e-6));
-  for(const l of Object.values(st.inds))if(l.a&&l.b&&!l.burned)tau=Math.min(tau,Math.max(1e-9,+l.value||1e-3)/rSeries);
+  if(rs.length){
+    const rParallel=1/rs.reduce((sum,r)=>sum+1/r,0), rSeries=rs.reduce((sum,r)=>sum+r,0);
+    cs.forEach(c=>tau=Math.min(tau,rParallel*c));
+    ls.forEach(l=>tau=Math.min(tau,l/rSeries));
+  }
+  cs.forEach(c=>ls.forEach(l=>tau=Math.min(tau,Math.sqrt(l*c))));
   return tau;
 }
 function solveDC(){
@@ -803,10 +1131,13 @@ function solveDC(){
   T.accum+=Math.min(.25,Math.max(0,(now-T.lastWall)/1000))*T.speed;
   T.lastWall=now;
   let res=T.lastResult;
-  // Limita el trabajo de una actualización para que pasos muy finos no congelen la interfaz.
-  // Si se alcanza el presupuesto, el tiempo pendiente se procesa en ciclos posteriores.
-  let budget=12000;
-  while(T.accum>=T.dt&&budget-->0){res=solveTransient();T.accum-=T.dt;}
+  // Presupuesto de cómputo de 40 ms por actualización: si Δt es muy fino, la simulación
+  // avanza más lento que el reloj (se indica en la barra superior) pero nunca congela la página.
+  const t0=performance.now(); T.cpuLimited=false;
+  while(T.accum>=T.dt){
+    res=solveTransient(); T.accum-=T.dt;
+    if(performance.now()-t0>40){ T.cpuLimited=true; T.accum=Math.min(T.accum,T.dt); break; }
+  }
   if(!res){ // cambio de montaje: un paso (en pausa, casi nulo para conservar la carga)
     const d=T.dt; if(!T.speed) T.dt=1e-9; res=solveTransient(); T.dt=d; }
   T.lastResult=res;return res;
@@ -1277,33 +1608,79 @@ function drawTrace(){
   const dpr=window.devicePixelRatio||1, W=cv.offsetWidth, H=150;
   if(cv.width!==Math.round(W*dpr)){ cv.width=Math.round(W*dpr); cv.height=Math.round(H*dpr); }
   const g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,W,H);
-  const T=st.transient, tr=st.trace;
-  const timeDiv=Math.max(1e-6,+L('scopeTimeDiv').value||.001), vDiv=Math.max(1e-9,+L('scopeVDiv').value||2), iDiv=Math.max(1e-9,+L('scopeIDiv').value||.005);
+  const T=st.transient, sc=st.scope;
+  const timeDiv=Math.max(1e-6,+L('scopeTimeDiv').value||.001), vDiv=Math.max(1e-12,+L('scopeVDiv').value||2), iDiv=Math.max(1e-12,+L('scopeIDiv').value||.005);
   const win=10*timeDiv, pl=46, pr=50, pt=10, pb=20, w=W-pl-pr, h=H-pt-pb, t1=T.time;
-  // Disparo de flanco ascendente en CH1; sin cruce se mantiene el barrido continuo.
-  const trig=Number(L('scopeTrigger').value)||0; let edge=null;
-  for(let j=1;j<tr.length;j++) if(tr[j-1].v!=null&&tr[j].v!=null&&tr[j-1].v<trig&&tr[j].v>=trig){edge=tr[j].t;}
-  const t0=edge!=null&&t1-edge<win*2?edge-2*timeDiv:t1-win;
-  const nice=m=>{ if(!(m>0)) return 1; const e=Math.pow(10,Math.floor(Math.log10(m))), f=m/e;
-    return (f<=1?1:f<=2?2:f<=5?5:10)*e; };
-  const sv=4*vDiv, si=4*iDiv;
+  // Disparo por flanco (subida o bajada) en CH1, con 2 divisiones de pre-disparo.
+  // Modo «Auto»: barrido continuo que se sincroniza con el último flanco.
+  // Modo «Único»: retiene la primera captura posterior a «Rearmar» (ideal para transitorios).
+  const trig=Number(L('scopeTrigger').value)||0, up=sc.slope!=='down';
+  const crosses=(a,b)=>a!=null&&b!=null&&(up?(a<trig&&b>=trig):(a>trig&&b<=trig));
+  let tr=st.trace, t0, status='';
+  if(sc.mode==='single'){
+    if(sc.frozen){ tr=sc.frozen.samples; t0=sc.frozen.t0; status='CAPTURA RETENIDA · «Rearmar» para otra'; }
+    else { t0=t1-win; status=sc.edge!=null?'DISPARADO · capturando…':'ÚNICO · esperando disparo'; }
+  } else {
+    let edge=null;
+    for(let j=1;j<tr.length;j++) if(tr[j].t<=t1-8*timeDiv&&crosses(tr[j-1].v,tr[j].v)) edge=tr[j].t;
+    t0=edge!=null&&tr.length&&edge-2*timeDiv>=tr[0].t?edge-2*timeDiv:t1-win;
+  }
+  const u1=chUnit(1), u2=chUnit(2), sv=4*vDiv, si=4*iDiv;
   const y=(x,s)=>pt+h*(.5-x/s), X=t=>pl+w*(t-t0)/win;
   g.font='10px ui-monospace,Consolas,monospace'; g.lineWidth=1;
   for(let k=0;k<=8;k++){ const yy=pt+h*k/8; g.strokeStyle=k===4?'#465260':'#232a33'; g.beginPath(); g.moveTo(pl,yy); g.lineTo(pl+w,yy); g.stroke(); }
   for(let k=0;k<=10;k++){ const xx=pl+w*k/10; g.strokeStyle='#232a33'; g.beginPath(); g.moveTo(xx,pt); g.lineTo(xx,pt+h); g.stroke(); }
   g.strokeStyle='#3d4855'; g.strokeRect(pl,pt,w,h);
   const lab=(s,u)=>engTxt(s,u);
-  g.fillStyle='#4fd1e0'; g.textAlign='right'; g.fillText('+'+lab(sv,'V'),pl-4,pt+8); g.fillText('−'+lab(sv,'V'),pl-4,pt+h);
-  g.fillStyle='#f0a12e'; g.textAlign='left'; g.fillText('+'+lab(si,'A'),pl+w+4,pt+8); g.fillText('−'+lab(si,'A'),pl+w+4,pt+h);
-  g.fillStyle='#6c7a8a'; g.textAlign='center'; g.fillText(`10 div · ${engTxt(timeDiv,'s')}/div · t = ${engTxt(t1,'s')}`,pl+w/2,H-5);
+  g.fillStyle='#4fd1e0'; g.textAlign='right'; g.fillText('+'+lab(sv,u1),pl-4,pt+8); g.fillText('GND',pl-4,pt+h/2+3); g.fillText('−'+lab(sv,u1),pl-4,pt+h);
+  g.fillStyle='#f0a12e'; g.textAlign='left'; g.fillText('+'+lab(si,u2),pl+w+4,pt+8); g.fillText('−'+lab(si,u2),pl+w+4,pt+h);
+  g.fillStyle='#6c7a8a'; g.textAlign='center'; g.fillText(`${engTxt(timeDiv,'s')}/div · t = ${engTxt(t1,'s')}${status?' · '+status:''}`,pl+w/2,H-5);
   const ty=y(trig,sv); if(ty>=pt&&ty<=pt+h){g.strokeStyle='#4fd1e077';g.setLineDash([4,3]);g.beginPath();g.moveTo(pl,ty);g.lineTo(pl+w,ty);g.stroke();g.setLineDash([]);}
   g.save(); g.beginPath(); g.rect(pl,pt,w,h); g.clip();
   const line=(key,s,col)=>{ g.strokeStyle=col; g.lineWidth=1.8; g.beginPath(); let on=false;
     tr.forEach(p=>{ if(p[key]==null||p.t<t0||p.t>t0+win){on=false;return;} const xx=X(p.t), yy=y(p[key],s);
       if(on) g.lineTo(xx,yy); else { g.moveTo(xx,yy); on=true; } }); g.stroke(); };
   line('v',sv,'#4fd1e0'); line('i',si,'#f0a12e'); g.restore();
-  if(!tr.some(p=>p.v!=null||p.i!=null)){ g.fillStyle='#6c7a8a'; g.fillText('Conecta el voltímetro o el amperímetro',pl+w/2,pt+h/2); }
-  updateScopeMetrics();
+  if(!tr.some(p=>p.v!=null||p.i!=null)){ g.fillStyle='#6c7a8a'; g.fillText('Conecta los medidores elegidos en CH1 y CH2',pl+w/2,pt+h/2); }
+  updateScopeMetrics(tr.filter(p=>p.t>=t0&&p.t<=t0+win));
+}
+// Mediciones automáticas sobre una curva de transitorio (lo que en el laboratorio se hace con cursores):
+//  · τ por el criterio del 63,2 %: tiempo desde el inicio del cambio hasta 63,2 % del salto total.
+//    Solo se informa si la curva es monótona (sin sobrepaso) y alcanzó su valor final.
+//  · Frecuencia de oscilación amortiguada a partir de los cruces por el valor final.
+//  · Pulso (sale y vuelve, como la corriente de un RC): τ de decaimiento al 36,8 % desde el pico.
+function transientMetrics(samples,key){
+  const pts=samples.filter(p=>p[key]!=null); if(pts.length<20) return null;
+  const n=pts.length, v=i=>pts[i][key], v0=v(0), vf=pts.slice(Math.floor(n*0.94)).reduce((s,p)=>s+p[key],0)/(n-Math.floor(n*0.94));
+  const amp=pts.reduce((m,p)=>Math.max(m,Math.abs(p[key]-vf)),0); if(!(amp>1e-12)) return null;
+  const span=vf-v0, out={v0,vf};
+  // Inicio del cambio: primer punto fuera del 0,2 % y, desde ahí, hacia atrás mientras la pendiente
+  // conserve el sentido (así se ubica bien el arranque de curvas con pendiente inicial nula).
+  const start=pts.findIndex(p=>Math.abs(p[key]-v0)>0.002*amp); if(start<1) return null;
+  const dir=Math.sign(v(start)-v0); let maxSl=0; for(let i=1;i<n;i++) maxSl=Math.max(maxSl,Math.abs(v(i)-v(i-1)));
+  let s0=start; while(s0>1&&(v(s0-1)-v(s0-2))*dir>0.002*maxSl) s0--;
+  const ts=pts[s0-1].t;
+  const tail=pts.slice(Math.floor(n*0.85)), settled=Math.abs(tail[tail.length-1][key]-tail[0][key])<0.02*amp;
+  const over=Math.abs(span)<0.05*amp||pts.some(p=>(p[key]-vf)*Math.sign(span)>0.03*Math.abs(span));
+  if(!over){
+    // Curva monótona: τ = tiempo desde el inicio hasta el 63,2 % del cambio total.
+    const k=pts.findIndex((p,i)=>i>=start&&(p[key]-v0)/span>=0.632);
+    if(k>0&&settled){ const a=pts[k-1], b=pts[k], fa=(a[key]-v0)/span, fb=(b[key]-v0)/span; out.tau=a.t+(0.632-fa)/(fb-fa||1)*(b.t-a.t)-ts; }
+  } else {
+    // Oscilación: frecuencia a partir de la separación media entre máximos (de la desviación respecto al valor final).
+    const pk=[]; for(let i=start+1;i<n-1;i++){ const d=v(i)-vf; if(d>0.1*amp&&v(i)>v(i-1)&&v(i)>=v(i+1)) pk.push(pts[i].t); }
+    if(pk.length>=2) out.freq=(pk.length-1)/(pk[pk.length-1]-pk[0]);
+    else {
+      // Pulso único: τ de decaimiento desde el pico hasta el 36,8 % de su desviación.
+      let ip=start; for(let i=start;i<n;i++) if(Math.abs(v(i)-vf)>Math.abs(v(ip)-vf)) ip=i;
+      const d0=v(ip)-vf, k=pts.findIndex((p,i)=>i>ip&&(p[key]-vf)/d0<=0.368);
+      if(k>0&&settled){ const a=pts[k-1], b=pts[k], fa=(a[key]-vf)/d0, fb=(b[key]-vf)/d0; out.decay=a.t+(fa-0.368)/(fa-fb||1)*(b.t-a.t)-pts[ip].t; }
+    }
+    // Pico: máximo sobrepaso en el sentido del cambio; en un pulso, la mayor desviación.
+    out.peak=Math.abs(span)<0.05*amp?pts.reduce((m,p)=>Math.abs(p[key]-vf)>Math.abs(m-vf)?p[key]:m,vf)
+      :pts.reduce((m,p)=>(p[key]-m)*Math.sign(span)>0?p[key]:m,vf);
+  }
+  return (out.tau||out.freq||out.decay)?out:null;
 }
 function fitFundamental(samples,key,freq){
   const w=2*Math.PI*freq, sums=[0,0,0,0,0,0,0,0,0], ys=[];
@@ -1320,17 +1697,42 @@ function fitFundamental(samples,key,freq){
   const total=ys.reduce((z,p)=>z+(p.v-mean)**2,0);
   return {amp,phase,fit:total>1e-24?Math.sqrt(err/total):0};
 }
-function updateScopeMetrics(){
+// Mediciones del osciloscopio sobre lo que está en pantalla.
+//  · En DC (transitorios): τ por el 63,2 % o frecuencia de oscilación de cada canal.
+//  · En AC: ajuste del primer armónico de cada canal (amplitud y fase). Con V e I se informa
+//    |Z| = Vp/Ip y Δφ(V−I); con dos canales iguales, la relación CH2/CH1 (ganancia en dB) y Δφ.
+function updateScopeMetrics(view){
   const host=L('scopeMetrics');if(!host)return;
-  const freq=st.wave.kind==='dc'?0:Math.max(1,+st.wave.freq||1),tr=st.trace;
-  if(!freq){host.textContent='Selecciona una señal periódica para estimar desfase e impedancia.';return;}
-  const samples=tr.filter(p=>p.v!=null&&p.i!=null),span=samples.length?samples[samples.length-1].t-samples[0].t:0;
-  if(samples.length<24||span<2/freq){host.textContent=`Capturando señal: se necesitan ≥2 ciclos y ambos canales conectados (${samples.length} muestras actuales).`;return;}
-  const vf=fitFundamental(samples,'v',freq),inf=fitFundamental(samples,'i',freq);
-  if(!vf||!inf||inf.amp<1e-12){host.textContent='No hay amplitud suficiente en ambos canales para calcular la impedancia.';return;}
-  let phase=(vf.phase-inf.phase)*180/Math.PI;phase=((phase+180)%360+360)%360-180;
-  const impedance=vf.amp/inf.amp,quality=Math.max(vf.fit,inf.fit)*100;
-  host.innerHTML=`Fundamental ${engTxt(freq,'Hz')} · V<sub>p</sub> ${engTxt(vf.amp,'V')} · I<sub>p</sub> ${engTxt(inf.amp,'A')} · Δφ(V−I) ${phase>=0?'+':''}${phase.toFixed(1)}° · |Z|≈${engTxt(impedance,'Ω')}<br><span class="${quality>15?'warn':'l'}">Ajuste sinusoidal residual: ${quality.toFixed(1)} %. ${quality>15?'La señal no está bien resuelta: reduce Δt o espera el régimen estable.':'Estimación del primer armónico; para |Z| mide V e I sobre el mismo elemento.'}</span>`;
+  const u1=chUnit(1), u2=chUnit(2), parts=[];
+  // Transitorios (DC o cada flanco de una onda cuadrada).
+  if(st.wave.kind==='dc'||st.wave.kind==='square'){
+    for(const [key,n,u] of [['v',1,u1],['i',2,u2]]){
+      const m=transientMetrics(view,key); if(!m) continue;
+      if(m.tau) parts.push(`CH${n}: τ medido (63,2 %) = <b>${engTxt(m.tau,'s')}</b> · de ${engTxt(m.v0,u)} a ${engTxt(m.vf,u)}`);
+      if(m.freq) parts.push(`CH${n}: oscilación amortiguada f<sub>d</sub> ≈ <b>${engTxt(m.freq,'Hz')}</b> · pico ${engTxt(m.peak,u)} · final ${engTxt(m.vf,u)}`);
+      if(m.decay) parts.push(`CH${n}: pulso · pico ${engTxt(m.peak,u)} · τ de decaimiento (36,8 %) = <b>${engTxt(m.decay,'s')}</b>`);
+    }
+  }
+  if(st.wave.kind==='dc'){
+    host.innerHTML=parts.length?parts.join('<br>'):'Transitorios: usa disparo «Único», pulsa «Rearmar» y provoca el cambio (cerrar/abrir S1). Aquí aparecerán τ (63,2 %), τ de decaimiento o la frecuencia de oscilación de la curva capturada.';
+    return;
+  }
+  if(st.wave.kind==='square'&&parts.length){ host.innerHTML=parts.join('<br>'); return; }
+  const freq=Math.max(1,+st.wave.freq||1);
+  const samples=view.filter(p=>p.v!=null&&p.i!=null),span=samples.length?samples[samples.length-1].t-samples[0].t:0;
+  if(samples.length<24||span<1.9/freq){host.textContent=`Capturando señal: se necesitan ≥2 ciclos en pantalla y ambos canales conectados (${samples.length} muestras). Ajusta tiempo/div si hace falta.`;return;}
+  const f1=fitFundamental(samples,'v',freq),f2=fitFundamental(samples,'i',freq);
+  if(!f1||!f2||f1.amp<1e-12||f2.amp<1e-12){host.textContent='Uno de los canales no tiene amplitud suficiente para comparar.';return;}
+  const wrap=d=>((d+180)%360+360)%360-180, deg=r=>r*180/Math.PI, quality=Math.max(f1.fit,f2.fit)*100;
+  let main;
+  if(u1!==u2){
+    const [fv,fi]=u1==='V'?[f1,f2]:[f2,f1], ph=wrap(deg(fv.phase-fi.phase));
+    main=`V<sub>p</sub> ${engTxt(fv.amp,'V')} · I<sub>p</sub> ${engTxt(fi.amp,'A')} · <b>|Z| ≈ ${engTxt(fv.amp/fi.amp,'Ω')}</b> · <b>Δφ(V−I) = ${ph>=0?'+':''}${ph.toFixed(1)}°</b> (${ph>2?'inductivo':ph<-2?'capacitivo':'resistivo'})`;
+  } else {
+    const g=f2.amp/f1.amp, ph=wrap(deg(f2.phase-f1.phase));
+    main=`CH1<sub>p</sub> ${engTxt(f1.amp,u1)} · CH2<sub>p</sub> ${engTxt(f2.amp,u2)} · <b>CH2/CH1 = ${g.toFixed(4)} (${(20*Math.log10(g)).toFixed(2)} dB)</b> · <b>Δφ(CH2−CH1) = ${ph>=0?'+':''}${ph.toFixed(1)}°</b>`;
+  }
+  host.innerHTML=`f = ${engTxt(freq,'Hz')} · ${main}<br><span class="${quality>15?'warn':'l'}">Ajuste del primer armónico, residuo ${quality.toFixed(1)} %. ${quality>15?'Señal no senoidal o aún en transitorio: espera el régimen estable o reduce Δt.':'Equivale a medir Δt entre cruces por cero: φ = 360°·f·Δt.'}</span>`;
 }
 
 /* ============================================================
@@ -1398,9 +1800,29 @@ function paintMeter(k){
   if(ok){ d.x=d.target; d.v=0; }
   const val=type==='V'?noisy(d.x,0.005,0.00012):noisy(d.x,0.005,4e-8);
   const f=type==='V'?eng(val,'V','m'):eng(val,'A');
-  const ac=st.wave.kind!=='dc'&&st.srcs.some(s=>s.on&&s.i===st.wave.source);
-  showMeter(k,f.num,f.unit,ok?(ac?'AC instantánea':'DC'):'estabilizando…',false,f.num+' '+f.unit+(ok?'':' ∿'));
+  if(acActive()) return;                       // en AC la lectura la pone readMeter (valor eficaz)
+  showMeter(k,f.num,f.unit,ok?'DC':'estabilizando…',false,f.num+' '+f.unit+(ok?'':' ∿'));
   lastRead[k]={txt:f.num+' '+f.unit, raw:val};
+}
+// Lectura de un voltímetro o amperímetro.
+//  · DC: valor con la respuesta de asentamiento del instrumento (oscila y se estabiliza).
+//  · AC (generador activo): valor eficaz verdadero (true RMS) y pico, sin oscilación,
+//    como un multímetro en modo AC. Para pico-a-pico y fase se usa el osciloscopio.
+function readMeter(id,res){
+  const type=meterType(id), unit=type==='V'?'V':'A';
+  if(!connected(id)){ meterTarget(id,null); showMeter(id,'— — —',unit,'sin conectar',false,'— — —'); lastRead[id]=null; return; }
+  if(type==='A'&&meterFused(id)){ meterTarget(id,null); showMeter(id,'FUSE','','fusible fundido',true,'fusible fundido'); lastRead[id]=null; return; }
+  if(acActive()){
+    const r=acRes[id];
+    if(!r){ meterTarget(id,null); showMeter(id,'- - -',unit,'AC · integrando…',false,'AC · integrando…'); lastRead[id]=null; return; }
+    const d=dyn[id]||(dyn[id]={x:0,v:0,target:null}); d.target=d.x=r.rms; d.v=0;
+    const val=noisy(r.rms,0.003,0), f=type==='V'?eng(val,'V','m'):eng(val,'A');
+    const txt=`${f.num} ${f.unit} rms`;
+    showMeter(id,f.num,f.unit,`AC rms · pico ${engTxt(r.pk,unit)}`,false,txt);
+    lastRead[id]={txt, raw:val}; return;
+  }
+  const v=res.V(`M${id}r`)-res.V(`M${id}b`);
+  meterTarget(id,type==='V'?v:v/BURDEN); paintMeter(id);
 }
 function renderReadings(){
   const res=solveDC();
@@ -1416,20 +1838,8 @@ function renderReadings(){
   checkBurnout(res);
   drawFlow(res);
   const energized=st.srcs.some(sourceEnergized);
-  // voltímetro: diferencia de potencial entre sus bornes (en paralelo, Zin 10 MΩ)
-  if(!connected('V')){ meterTarget('V',null); showMeter('V','— — —','V','sin conectar',false,'— — —'); lastRead.V=null; }
-  else{ meterTarget('V',res.V('MVr')-res.V('MVb')); paintMeter('V'); }
-  // amperímetro: corriente que entra por el borne mA y sale por COM (burden 0,1 Ω)
-  if(!connected('A')){ meterTarget('A',null); showMeter('A','— — —','A','sin conectar',false,'— — —'); lastRead.A=null; }
-  else if(st.fuseA){ meterTarget('A',null); showMeter('A','FUSE','','fusible fundido',true,'fusible fundido'); lastRead.A=null; }
-  else{ meterTarget('A',(res.V('MAr')-res.V('MAb'))/BURDEN); paintMeter('A'); }
-  for(const m of st.extraMeters){
-    const id=m.id,type=m.type,unit=type==='V'?'V':'A';
-    if(!connected(id)){meterTarget(id,null);showMeter(id,'— — —',unit,'sin conectar',false,'— — —');lastRead[id]=null;continue;}
-    if(type==='A'&&meterFused(id)){meterTarget(id,null);showMeter(id,'FUSE','','fusible fundido',true,'fusible fundido');lastRead[id]=null;continue;}
-    const value=type==='V'?res.V(`M${id}r`)-res.V(`M${id}b`):(res.V(`M${id}r`)-res.V(`M${id}b`))/BURDEN;
-    meterTarget(id,value);paintMeter(id);
-  }
+  // Voltímetros (en paralelo, Zin 10 MΩ) y amperímetros (en serie, burden 0,1 Ω): base y adicionales.
+  for(const id of [...meterIds('V'),...meterIds('A')]) readMeter(id,res);
   // óhmetro
   if(!connected('O')){ showMeter('O','— — —','Ω','sin conectar',false,'— — —'); lastRead.O=null; }
   else if(energized){ showMeter('O','Err','','hay fuentes encendidas',true,'apaga las fuentes'); lastRead.O=null; }
@@ -1463,7 +1873,7 @@ function renderReadings(){
   const on=st.srcs.filter(s=>s.on).length, tripped=st.srcs.some(s=>s.tripped);
   const nComp=placedComps().length;
   L('tag').textContent = tripped ? '⚠ FUENTE APAGADA POR SOBRECORRIENTE — REVISA EL MONTAJE'
-    : `${on} fuente${on===1?'':'s'} encendida${on===1?'':'s'} · ${st.wires.length} cables · ${nComp} pieza${nComp===1?'':'s'} · t = ${res.time.toFixed(2)} s`;
+    : `${on} fuente${on===1?'':'s'} encendida${on===1?'':'s'} · ${nComp} pieza${nComp===1?'':'s'} · t = ${engTxt(res.time,'s')} · Δt = ${engTxt(st.transient.dt,'s')}${st.transient.cpuLimited?' · cálculo limitado: más lento que el reloj':''}`;
   L('tag').style.color = tripped?'#e0483a':'';
   L('fuseA').disabled=!st.fuseA;
 }
@@ -2031,86 +2441,476 @@ function download(name,text,type){
 /* ============================================================
    15. CIRCUITO DE EJEMPLO
    ============================================================ */
-function resetTransient(){Object.assign(st.transient,{history:{},time:0,accum:0,lastResult:null,lastWall:performance.now()});}
+function resetTransient(){Object.assign(st.transient,{history:{},time:0,accum:0,lastResult:null,lastWall:performance.now()});clearAC();}
+// Borra las lecturas AC integradas (al cambiar de montaje o de señal).
+function clearAC(){ for(const k in acAcc) delete acAcc[k]; for(const k in acRes) delete acRes[k]; }
 function clearBoard(){st.wires=[];st.pend=null;st.res={};st.caps={};st.inds={};st.sws={};st.selected=null;st.counts={R:0,C:0,L:0,S:0};st.snapshot=null;resetTransient();}
 const W=(a,b,c)=>st.wires.push({id:'w'+(st.wid++),a,b,color:c});
+// ---------------------------------------------------------------------------
+// Catálogo de circuitos de ejemplo. Cada entrada arma el montaje en la protoboard
+// (build), configura el osciloscopio (scope) y trae su documentación (doc):
+// objetivo, teoría, pasos de la demostración y tabla de valores teóricos esperados.
+// Familias según el protocolo de validación de la guía del proyecto (P1–P5) y los
+// cuatro ejemplos del simulador base, que funcionan como pruebas de regresión.
+// ---------------------------------------------------------------------------
+// Longitud y orientación de una pieza a partir de sus dos orificios.
+function geom(a,b){
+  const m1=a.match(/^[TB](\d+)([A-J])$/), m2=b.match(/^[TB](\d+)([A-J])$/);
+  if(!m1||!m2) return {span:5,orient:'h'};
+  return m1[2]===m2[2]?{span:Math.abs(m2[1]-m1[1]),orient:'h'}:{span:Math.abs(ROWS.indexOf(m2[2])-ROWS.indexOf(m1[2])),orient:'v'};
+}
+const part=(t,value,a,b,extra={})=>createComponent(t,{value,a,b,...geom(a,b),...extra});
+const sw=(a,b,closed=false)=>createComponent('S',{a,b,...geom(a,b),closed});
+const meters=(...ids)=>ids.forEach(id=>createExtraMeter(id,id[0],false));
+// Generador sobre la Fuente 1: forma, amplitud pico, frecuencia, nivel DC y ciclo útil.
+function gen(kind,amp,freq,offset=0,duty=50){ st.wave={source:0,kind,amp,freq,offset,duty}; st.srcs[0].V=0; st.srcs[0].on=true; }
+// Fila de la tabla de valores esperados: [magnitud, valor teórico, instrumento / cómo se mide].
+const row=(m,v,how)=>[m,v,how];
+
+const PRESETS={
+  laboratorio:{
+    fam:'Circuito asignado', title:'Circuito del profesor · 9 V, S1, R1 = 1 kΩ, R2 = 2 kΩ ‖ C1 = 10 µF',
+    build(){
+      sw('T2C','T5C'); part('R',1000,'T7C','T12C'); part('R',2000,'T14D','B14G');
+      part('C',10e-6,'T20D','B20G',{polar:true,vmax:25});
+      W('S0p','T2A','rojo'); W('T12A','T14A','rojo'); W('T14B','T20B','amarillo'); W('S0n','B20J','negro');
+      // Amperímetro 1: corriente total (entre S1 y R1). Amperímetro 2: corriente por R2.
+      W('T5A','MAr','rojo'); W('MAb','T7A','negro');
+      meters('A2','V2');
+      W('B14H','MA2r','rojo'); W('MA2b','B20H','negro');
+      // Voltímetro 1: tensión de C1 (= tensión de R2). Voltímetro 2: tensión de R1.
+      W('MVr','T20A','rojo'); W('MVb','B20I','negro');
+      W('MV2r','T7B','rojo'); W('MV2b','T12B','negro');
+      st.selected='C:C1';
+    },
+    scope:{t:0.005,d1:2,d2:0.003,trig:3,ch1:'V',ch2:'A',mode:'single'},
+    msg:'Circuito del profesor cargado · S1 abierto: doble clic sobre S1 para cerrarlo',
+    doc:{
+      obj:'Observar la carga y la descarga de C1 a través de una red de dos resistencias, y verificar los valores de régimen estable, la constante de tiempo, la carga y la energía almacenada.',
+      teoria:`<p><b>Régimen estable (S1 cerrado):</b> en DC el capacitor cargado no conduce (I<sub>C1</sub> = 0), así que R1 y R2 quedan en serie: R<sub>eq</sub> = 3 kΩ, I = 9 V / 3 kΩ = 3 mA, V<sub>R1</sub> = 3 V y V<sub>R2</sub> = V<sub>C1</sub> = 6 V (divisor de tensión). Ley de mallas: 3 V + 6 V = 9 V.</p>
+<p><b>Carga (al cerrar S1):</b> el equivalente de Thévenin visto por C1 es V<sub>Th</sub> = 9·R2/(R1+R2) = 6 V y R<sub>Th</sub> = R1‖R2 = 666,7 Ω, luego τ<sub>c</sub> = R<sub>Th</sub>·C = 6,67 ms. v<sub>C</sub>(t) = 6 V·(1 − e<sup>−t/τ</sup>) e i<sub>total</sub>(t) = (9 − v<sub>C</sub>)/R1 = 3 mA + 6 mA·e<sup>−t/τ</sup>: arranca en 9 mA (C1 descargado actúa como cortocircuito) y baja a 3 mA.</p>
+<p><b>Descarga (al abrir S1):</b> la fuente y R1 quedan fuera; C1 se descarga solo por R2: τ<sub>d</sub> = R2·C = 20 ms y v<sub>C</sub>(t) = 6 V·e<sup>−t/τ</sup>. El amperímetro 1 marca 0 de inmediato; el amperímetro 2 (R2) arranca en 3 mA y decae.</p>
+<p><b>Nodos:</b> I<sub>total</sub> = I<sub>R2</sub> + I<sub>C1</sub>. Durante la carga, la diferencia entre los amperímetros 1 y 2 es la corriente de C1, que tiende a 0.</p>
+<p><b>Energía:</b> Q = C·V = 60 µC y U = ½·C·V² = 180 µJ. Potencia en régimen estable: P<sub>R1</sub> = 9 mW, P<sub>R2</sub> = 18 mW, P<sub>fuente</sub> = 27 mW (balance).</p>`,
+      pasos:['Con S1 abierto todos los medidores marcan ≈ 0.','Doble clic sobre S1 para cerrarlo: las lecturas oscilan y se estabilizan en ≈ 3 mA (A1 y A2), 6 V (V1) y 3 V (V2).','En el osciloscopio (disparo «Único», ya armado) queda la curva de carga; en «Mediciones» del osciloscopio aparece τ medido (≈ 6,67 ms).','Para la descarga: elige flanco ↓, nivel 3 V, 20 ms/div, pulsa «Rearmar» y abre S1. τ medido ≈ 20 ms.','Activa «Análisis (modo docente)» para ver Q, U y la τ calculada con R<sub>Th</sub>.'],
+      tabla:[row('Corriente total (estable)','3,000 mA','Amperímetro 1'),row('Corriente por R2 (estable)','3,000 mA','Amperímetro 2'),row('V<sub>C1</sub> = V<sub>R2</sub>','6,000 V','Voltímetro 1'),row('V<sub>R1</sub>','3,000 V','Voltímetro 2'),
+        row('Corriente inicial al cerrar S1','9 mA','Osciloscopio CH2'),row('τ de carga = (R1‖R2)·C','6,67 ms','Osciloscopio, 63,2 %'),row('τ de descarga = R2·C','20 ms','Osciloscopio, flanco ↓'),
+        row('Carga Q = C·V','60 µC','Análisis docente'),row('Energía U = ½CV²','180 µJ','Análisis docente'),row('Potencia entregada','27 mW','Análisis docente')]
+    }
+  },
+
+  /* ---------------- Regresión: ejemplos del simulador base ---------------- */
+  serie:{
+    fam:'Regresión · simulador base', title:'Serie · 12 V con R1 = 1 kΩ, R2 = 2 kΩ, R3 = 3 kΩ',
+    build(){
+      st.srcs[0].V=12;
+      part('R',1000,'T3C','T8C'); part('R',2000,'T8D','T13D'); part('R',3000,'T13C','T18C');
+      W('S0p','MAr','rojo'); W('MAb','T3A','negro'); W('T18A','RBN18','negro'); W('S0n','RBN2','negro');
+      W('MVr','T8A','rojo'); W('MVb','T13A','negro');
+    },
+    msg:'Ejemplo base · circuito serie',
+    doc:{
+      obj:'Prueba de regresión: verificar que el circuito resistivo serie del simulador base da los mismos resultados.',
+      teoria:'<p>En serie la corriente es la misma en todos los elementos: R<sub>eq</sub> = R1 + R2 + R3 = 6 kΩ; I = 12 V / 6 kΩ = 2 mA. Cada tensión es V<sub>k</sub> = I·R<sub>k</sub>: 2 V, 4 V y 6 V, que suman 12 V (ley de mallas).</p>',
+      pasos:['Leer el amperímetro (corriente total) y el voltímetro (sobre R2).','Mover el voltímetro a R1 y R3 y comprobar que las tres tensiones suman 12 V.'],
+      tabla:[row('Corriente','2,000 mA','Amperímetro'),row('V<sub>R2</sub>','4,000 V','Voltímetro'),row('V<sub>R1</sub> · V<sub>R3</sub>','2 V · 6 V','Voltímetro (moverlo)'),row('Potencia total','24 mW','Análisis docente')]
+    }
+  },
+  paralelo:{
+    fam:'Regresión · simulador base', title:'Paralelo · 12 V con R1 = 1 kΩ, R2 = 2 kΩ, R3 = 3 kΩ',
+    build(){
+      st.srcs[0].V=12;
+      part('R',1000,'T5D','B5G'); part('R',2000,'T10D','B10G'); part('R',3000,'T15D','B15G');
+      W('S0p','MAr','rojo'); W('MAb','T5A','negro'); W('T5B','T10B','rojo'); W('T10A','T15A','rojo');
+      W('B5J','RBN5','negro'); W('B10J','RBN10','negro'); W('B15J','RBN15','negro'); W('S0n','RBN2','negro');
+      W('MVr','T15B','rojo'); W('MVb','B15I','negro');
+    },
+    msg:'Ejemplo base · circuito paralelo',
+    doc:{
+      obj:'Prueba de regresión: resistencias en paralelo con la misma tensión.',
+      teoria:'<p>En paralelo la tensión es la misma: 12 V. Corrientes: 12 mA, 6 mA y 4 mA; total 22 mA (ley de nodos). R<sub>eq</sub> = 1/(1/1k + 1/2k + 1/3k) = 545,5 Ω.</p>',
+      pasos:['El amperímetro mide la corriente total y el voltímetro la tensión común.','Con la «Guía de medición» se puede medir la corriente de cada rama.'],
+      tabla:[row('Corriente total','22,00 mA','Amperímetro'),row('Tensión común','12,00 V (11,99 V con r interna)','Voltímetro'),row('I<sub>R1</sub> · I<sub>R2</sub> · I<sub>R3</sub>','12 · 6 · 4 mA','Guía de medición'),row('R<sub>eq</sub>','545,5 Ω','Óhmetro (fuente apagada)')]
+    }
+  },
+  mixto:{
+    fam:'Regresión · simulador base', title:'Mixto · 12 V con R1 = 1 kΩ en serie con R2 = 2 kΩ ‖ R3 = 2 kΩ',
+    build(){
+      st.srcs[0].V=12;
+      part('R',1000,'T3C','T8C'); part('R',2000,'T8D','B8G'); part('R',2000,'T12D','B12G');
+      W('S0p','MAr','rojo'); W('MAb','T3A','negro'); W('T8A','T12A','rojo');
+      W('B8J','RBN8','negro'); W('B12J','RBN12','negro'); W('S0n','RBN2','negro');
+      W('MVr','T8B','rojo'); W('MVb','B8I','negro');
+    },
+    msg:'Ejemplo base · circuito mixto',
+    doc:{
+      obj:'Prueba de regresión: combinación serie-paralelo.',
+      teoria:'<p>R2‖R3 = 1 kΩ; R<sub>eq</sub> = 1 kΩ + 1 kΩ = 2 kΩ; I = 6 mA. V<sub>R1</sub> = 6 V y la rama paralela queda con 6 V; cada rama lleva 3 mA.</p>',
+      pasos:['Amperímetro: corriente total. Voltímetro: tensión de la rama paralela.'],
+      tabla:[row('Corriente total','6,000 mA','Amperímetro'),row('Tensión del paralelo','6,000 V','Voltímetro'),row('Corriente por R2 y por R3','3,000 mA','Guía de medición'),row('V<sub>R1</sub>','6,000 V','Voltímetro (moverlo)')]
+    }
+  },
+  divisor:{
+    fam:'Regresión · simulador base', title:'Divisor de tensión · 12 V con R1 = 2 kΩ y R2 = 1 kΩ',
+    build(){
+      st.srcs[0].V=12;
+      part('R',2000,'T3C','T8C'); part('R',1000,'T8D','T13D');
+      W('S0p','MAr','rojo'); W('MAb','T3A','negro'); W('T13A','RBN13','negro'); W('S0n','RBN2','negro');
+      W('MVr','T8A','rojo'); W('MVb','T13B','negro');
+    },
+    msg:'Ejemplo base · divisor de tensión',
+    doc:{
+      obj:'Prueba de regresión: divisor resistivo.',
+      teoria:'<p>V<sub>salida</sub> = V·R2/(R1+R2) = 12·1/3 = 4 V; I = 12 V / 3 kΩ = 4 mA.</p>',
+      pasos:['El voltímetro está sobre R2 (salida del divisor).'],
+      tabla:[row('V<sub>salida</sub> (sobre R2)','4,000 V','Voltímetro'),row('Corriente','4,000 mA','Amperímetro')]
+    }
+  },
+
+  /* ---------------- P1 · RC ---------------- */
+  rc:{
+    fam:'P1 · RC', title:'RC serie con fuente DC · 9 V, R = 1 kΩ, C = 1 µF (τ = 1 ms)',
+    build(){
+      sw('T2C','T5C'); part('R',1000,'T7C','T12C'); part('C',1e-6,'T20D','B20G',{polar:false,vmax:25});
+      W('S0p','T2A','rojo'); W('T5A','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T20A','rojo'); W('B20J','S0n','negro');
+      W('MVr','T20B','amarillo'); W('MVb','B20I','azul');
+      meters('V2'); W('MV2r','T7B','rojo'); W('MV2b','T12B','negro');
+      st.selected='C:C1';
+    },
+    scope:{t:0.001,d1:2,d2:0.003,trig:3,mode:'single'},
+    msg:'P1 · RC cargado · cierre S1 (doble clic) para iniciar la carga',
+    doc:{
+      obj:'Medir la carga de un capacitor y determinar τ en el osciloscopio.',
+      teoria:'<p>τ = R·C = 1 ms. v<sub>C</sub>(t) = V(1 − e<sup>−t/τ</sup>), i(t) = (V/R)e<sup>−t/τ</sup>, v<sub>R</sub> = V − v<sub>C</sub>. En t = τ, v<sub>C</sub> = 63,2 % de V = 5,69 V. Energía final U = ½CV² = 40,5 µJ; durante la carga la resistencia disipa exactamente la misma energía (40,5 µJ): la fuente entrega CV² = 81 µJ.</p>',
+      pasos:['Cerrar S1: CH1 (v<sub>C</sub>) sube y CH2 (i) cae desde 9 mA.','Leer τ medido en el osciloscopio y comparar con 1 ms.','Comprobar en régimen estable: V<sub>C</sub> = 9 V, V<sub>R</sub> = 0, I = 0 (el capacitor actúa como circuito abierto).'],
+      tabla:[row('Corriente inicial V/R','9,00 mA','Osciloscopio CH2'),row('τ = RC','1,000 ms','Osciloscopio, 63,2 %'),row('v<sub>C</sub>(τ)','5,69 V','Osciloscopio'),row('V<sub>C</sub> final · V<sub>R</sub> final','9 V · 0 V','Voltímetros 1 y 2'),row('Energía ½CV²','40,5 µJ','Análisis docente')]
+    }
+  },
+  rcSquare:{
+    fam:'P1 · RC', title:'RC con onda cuadrada 0–5 V, 50 Hz (semiperiodo = 10 τ)',
+    build(){
+      gen('square',2.5,50,2.5);
+      part('R',1000,'T7C','T12C'); part('C',1e-6,'T20D','B20G',{polar:false,vmax:25});
+      W('S0p','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T20A','rojo'); W('B20J','S0n','negro');
+      W('MVr','T20B','amarillo'); W('MVb','B20I','azul');
+      meters('V2'); W('MV2r','T7B','rojo'); W('MV2b','T12B','negro');
+    },
+    scope:{t:0.001,d1:1,d2:0.002,trig:2.5,mode:'auto'},
+    msg:'P1 · RC con onda cuadrada (f ≪ 1/τ)',
+    doc:{
+      obj:'Ver cargas y descargas completas sucesivas con una onda cuadrada de frecuencia mucho menor que 1/τ.',
+      teoria:'<p>Cada semiperiodo dura 10 ms = 10 τ, así que el capacitor se carga a 5 V y se descarga a 0 V por completo. La corriente es un pico de ±5 mA en cada flanco que decae con τ = 1 ms.</p>',
+      pasos:['El osciloscopio se sincroniza con la subida de v<sub>C</sub>; con 1 ms/div aparece τ medido.','Cambiar la frecuencia a 500 Hz (semiperiodo = τ) para ver una carga incompleta (forma triangular).'],
+      tabla:[row('Pico de corriente','±5,00 mA','Osciloscopio CH2'),row('τ','1,000 ms','Osciloscopio, 63,2 %'),row('v<sub>C</sub> máx · mín','5 V · 0 V','Osciloscopio CH1')]
+    }
+  },
+
+  /* ---------------- P2 · RL ---------------- */
+  rl:{
+    fam:'P2 · RL', title:'RL serie con fuente DC · 5 V, R = 100 Ω, L = 10 mH (τ = 0,1 ms)',
+    build(){
+      st.srcs[0].V=5;
+      sw('T2C','T5C'); part('R',100,'T7C','T12C',{pmax:1}); part('L',10e-3,'T20D','B20G',{imax:0.5});
+      W('S0p','T2A','rojo'); W('T5A','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T20A','rojo'); W('B20J','S0n','negro');
+      W('MVr','T20B','amarillo'); W('MVb','B20I','azul');
+      meters('V2'); W('MV2r','T7B','rojo'); W('MV2b','T12B','negro');
+      st.selected='L:L1';
+    },
+    scope:{t:0.0001,d1:1,d2:0.02,trig:2.5,mode:'single'},
+    msg:'P2 · RL cargado · cierre S1 (doble clic) para iniciar',
+    doc:{
+      obj:'Medir el crecimiento de la corriente en un inductor y verificar τ = L/R.',
+      teoria:'<p>τ = L/R = 0,1 ms. i(t) = (V/R)(1 − e<sup>−t/τ</sup>) → 50 mA; v<sub>L</sub>(t) = V·e<sup>−t/τ</sup>: salta a 5 V al cerrar y cae a 0 (en régimen estable el inductor es un cortocircuito). Energía final U = ½LI² = 12,5 µJ. La resistencia es de 1 W porque disipa 0,25 W en régimen estable.</p>',
+      pasos:['Cerrar S1: CH1 (v<sub>L</sub>) salta a 5 V y decae; CH2 (i) sube a 50 mA.','Leer τ medido en CH2 (63,2 % = 31,6 mA).','Δt automático de 2 µs: la simulación va más lenta que el reloj, pero es exacta.'],
+      tabla:[row('Corriente final V/R','50,0 mA (49,7 mA con r interna y medidor)','Amperímetro'),row('τ = L/R','0,100 ms','Osciloscopio CH2'),row('v<sub>L</sub>(0⁺) · v<sub>L</sub> final','5 V · 0 V','Voltímetro 1'),row('V<sub>R</sub> final','5,0 V','Voltímetro 2'),row('Energía ½LI²','12,5 µJ','Análisis docente')]
+    }
+  },
+  rlSquare:{
+    fam:'P2 · RL', title:'RL con onda cuadrada 0–5 V, 500 Hz (semiperiodo = 10 τ)',
+    build(){
+      gen('square',2.5,500,2.5);
+      part('R',100,'T7C','T12C',{pmax:1}); part('L',10e-3,'T20D','B20G',{imax:0.5});
+      W('S0p','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T20A','rojo'); W('B20J','S0n','negro');
+      W('MVr','T20B','amarillo'); W('MVb','B20I','azul');
+      meters('V2'); W('MV2r','T7B','rojo'); W('MV2b','T12B','negro');
+    },
+    scope:{t:0.0001,d1:2,d2:0.02,trig:2.5,mode:'auto'},
+    msg:'P2 · RL con onda cuadrada',
+    doc:{
+      obj:'Ver la respuesta RL a escalones sucesivos.',
+      teoria:'<p>En cada flanco de subida v<sub>L</sub> salta a +5 V y en cada bajada a −5 V; ambos decaen con τ = 0,1 ms. La corriente sube a 50 mA y baja a 0 de forma exponencial.</p>',
+      pasos:['Observar los picos de ±5 V de v<sub>L</sub> (CH1) y la corriente (CH2).','τ medido aparece sobre CH2.'],
+      tabla:[row('Pico de v<sub>L</sub>','±5 V','Osciloscopio CH1'),row('Corriente máxima','50 mA','Osciloscopio CH2'),row('τ','0,100 ms','Osciloscopio')]
+    }
+  },
+
+  /* ---------------- P3 · RLC serie (respuesta al escalón) ---------------- */
+  rlc:{ fam:'P3 · RLC serie', title:'RLC serie subamortiguado · R = 20 Ω, L = 10 mH, C = 1 µF, 9 V', rlcR:20,
+    scope:{t:0.0005,d1:5,d2:0.025,trig:4.5,mode:'single'} },
+  rlc200:{ fam:'P3 · RLC serie', title:'RLC serie crítico · R = 200 Ω, L = 10 mH, C = 1 µF, 9 V', rlcR:200,
+    scope:{t:0.0002,d1:3,d2:0.01,trig:4.5,mode:'single'} },
+  rlc1k:{ fam:'P3 · RLC serie', title:'RLC serie sobreamortiguado · R = 1 kΩ, L = 10 mH, C = 1 µF, 9 V', rlcR:1000,
+    scope:{t:0.001,d1:3,d2:0.003,trig:4.5,mode:'single'} },
+
+  /* ---------------- P4 · AC ---------------- */
+  filterLP:{
+    fam:'P4 · AC', title:'Filtro RC pasa-bajas · R = 1 kΩ, C = 1 µF, senoidal 1 V a f<sub>c</sub> = 159 Hz',
+    build(){
+      gen('sine',1,159.15);
+      part('R',1000,'T7C','T12C'); part('C',1e-6,'T20D','B20G',{polar:false});
+      W('S0p','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T20A','amarillo'); W('B20J','S0n','negro');
+      W('MVr','T20B','rojo'); W('MVb','B20I','azul');
+      meters('V2'); W('MV2r','T7B','rojo'); W('MV2b','B20H','negro');
+      st.selected='C:C1';
+    },
+    scope:{t:0.002,d1:0.5,d2:0.5,trig:0,ch1:'V2',ch2:'V'},
+    msg:'P4 · Filtro pasa-bajas en su frecuencia de corte',
+    doc:{
+      obj:'Medir la relación salida/entrada y el desfase de un filtro RC pasa-bajas.',
+      teoria:'<p>f<sub>c</sub> = 1/(2πRC) = 159,15 Hz. H(f) = 1/(1 + j f/f<sub>c</sub>): en f<sub>c</sub>, |H| = 1/√2 = 0,707 (−3 dB) y φ = −45°. Por debajo de f<sub>c</sub> la salida ≈ entrada; por encima cae 20 dB por década. Corriente: I<sub>p</sub> = 1 V / (√2·1 kΩ) = 0,707 mA.</p>',
+      pasos:['CH1 = entrada (voltímetro 2), CH2 = salida sobre C (voltímetro 1).','Leer CH2/CH1 y Δφ en el panel del osciloscopio.','Barrer la frecuencia (por ejemplo 50, 159, 500, 1 500 Hz) y anotar la ganancia para construir la curva de respuesta.'],
+      tabla:[row('Ganancia en f<sub>c</sub>','0,707 (−3,01 dB)','Osciloscopio CH2/CH1'),row('Desfase en f<sub>c</sub>','−45,0°','Osciloscopio'),row('Corriente pico','0,707 mA (0,500 mA rms)','Amperímetro (rms)'),row('V<sub>salida</sub> rms','0,500 V','Voltímetro 1')]
+    }
+  },
+  filterHP:{
+    fam:'P4 · AC', title:'Filtro RC pasa-altas · C = 1 µF, R = 1 kΩ, senoidal 1 V a f<sub>c</sub> = 159 Hz',
+    build(){
+      gen('sine',1,159.15);
+      part('C',1e-6,'T7C','T12C',{polar:false}); part('R',1000,'T14C','T19C');
+      W('S0p','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T14A','amarillo'); W('T19A','B19J','negro'); W('S0n','B19I','negro');
+      W('MVr','T14B','rojo'); W('MVb','T19B','azul');
+      meters('V2'); W('MV2r','T7B','rojo'); W('MV2b','B19H','negro');
+      st.selected='C:C1';
+    },
+    scope:{t:0.002,d1:0.5,d2:0.5,trig:0,ch1:'V2',ch2:'V'},
+    msg:'P4 · Filtro pasa-altas en su frecuencia de corte',
+    doc:{
+      obj:'Medir ganancia y desfase de un filtro RC pasa-altas.',
+      teoria:'<p>H(f) = (j f/f<sub>c</sub>)/(1 + j f/f<sub>c</sub>): en f<sub>c</sub> = 159,15 Hz, |H| = 0,707 y φ = +45° (la salida adelanta). Por debajo de f<sub>c</sub> el capacitor bloquea la señal.</p>',
+      pasos:['CH1 = entrada, CH2 = salida sobre R.','Comparar con el pasa-bajas: misma ganancia en f<sub>c</sub>, desfase de signo contrario.'],
+      tabla:[row('Ganancia en f<sub>c</sub>','0,707 (−3,01 dB)','Osciloscopio'),row('Desfase en f<sub>c</sub>','+45,0°','Osciloscopio'),row('V<sub>salida</sub> rms','0,500 V','Voltímetro 1')]
+    }
+  },
+  rlrc:{
+    fam:'P4 · AC', title:'RL–RC serie-paralelo · R1 = 100 Ω + (100 Ω + 10 mH) ‖ (100 Ω + 1 µF), senoidal 2 V, 1 kHz',
+    build(){
+      gen('sine',2,1000);
+      part('R',100,'T3C','T8C'); part('R',100,'T8D','B8G'); part('L',10e-3,'B8H','B13H',{imax:0.5});
+      part('R',100,'T16D','B16G'); part('C',1e-6,'B16H','B21H',{polar:false});
+      W('S0p','MAr','rojo'); W('MAb','T3A','negro'); W('T8A','T16A','amarillo'); W('S0n','RBN2','negro');
+      meters('A2','A3','V2','V3');
+      W('B13J','MA2r','rojo'); W('MA2b','RBN13','negro');
+      W('B21J','MA3r','rojo'); W('MA3b','RBN21','negro');
+      W('MVr','T8B','rojo'); W('MVb','RBN6','negro');
+      W('MV2r','B16I','rojo'); W('MV2b','B21I','negro');
+      W('MV3r','B8I','rojo'); W('MV3b','B13I','negro');
+    },
+    scope:{t:0.0005,d1:0.5,d2:0.005,trig:0,ch1:'V',ch2:'A'},
+    msg:'P4 · Red RL–RC serie-paralelo con generador senoidal',
+    doc:{
+      obj:'Verificar el divisor de impedancias y la ley de nodos con fasores.',
+      teoria:'<p>A 1 kHz: Z<sub>RL</sub> = 100 + j62,8 Ω (118,1 Ω ∠32,1°) y Z<sub>RC</sub> = 100 − j159,2 Ω (188,0 Ω ∠−57,9°). Como R² = L/C, el paralelo es <b>exactamente 100 Ω resistivo a cualquier frecuencia</b> (red de resistencia constante): Z<sub>total</sub> = 200 Ω, I<sub>p</sub> = 10 mA en fase con la fuente y V<sub>p</sub> = 1 V en el paralelo.</p><p>Ramas: I<sub>RL</sub> = 8,47 mA ∠−32,1° e I<sub>RC</sub> = 5,32 mA ∠+57,9°. Sus amplitudes suman 13,8 mA y no 10 mA: la ley de nodos se cumple <b>con fasores</b>, no con valores eficaces.</p>',
+      pasos:['Amperímetros: A1 total, A2 rama RL, A3 rama RC (lecturas rms).','Osciloscopio: CH1 = tensión del paralelo, CH2 = corriente total → |Z| ≈ 100 Ω y Δφ ≈ 0°.','Poner CH2 en el amperímetro 2 o 3 para ver el desfase de cada rama.'],
+      tabla:[row('Corriente total','10,0 mA pico · 7,07 mA rms','Amperímetro 1'),row('I<sub>RL</sub> · I<sub>RC</sub>','5,99 · 3,76 mA rms','Amperímetros 2 y 3'),row('V del paralelo','1,00 V pico · 0,707 V rms','Voltímetro 1'),row('V<sub>L</sub> · V<sub>C</sub>','0,376 · 0,599 V rms','Voltímetros 3 y 2'),row('|Z| del paralelo · Δφ','100 Ω · 0°','Osciloscopio (CH1 = V, CH2 = A1)'),row('Desfase de I<sub>RL</sub> · I<sub>RC</sub>','−32,1° · +57,9°','Osciloscopio (CH2 = A2 o A3)')]
+    }
+  },
+  rlcRes:{
+    fam:'P4 · AC', title:'RLC serie en resonancia · R = 50 Ω, L = 10 mH, C = 1 µF, senoidal 1 V a 1 591,5 Hz',
+    build(){
+      gen('sine',1,1591.55);
+      part('R',50,'T7C','T12C'); part('L',10e-3,'T14C','T19C',{imax:1}); part('C',1e-6,'T21C','T26C',{polar:false,vmax:25});
+      W('S0p','MAr','rojo'); W('MAb','T7A','negro'); W('T12A','T14A','amarillo'); W('T19A','T21A','azul'); W('T26A','B26J','rojo'); W('B26I','S0n','negro');
+      W('MVr','T7B','rojo'); W('MVb','B26H','negro');
+      meters('V2','V3'); W('MV2r','T21B','rojo'); W('MV2b','T26B','negro'); W('MV3r','T14B','rojo'); W('MV3b','T19B','negro');
+    },
+    scope:{t:0.0002,d1:0.5,d2:0.01,trig:0,ch1:'V',ch2:'A'},
+    msg:'P4 · RLC serie en resonancia (f₀ ≈ 1,59 kHz)',
+    doc:{
+      obj:'Verificar la resonancia serie: corriente máxima, desfase nulo y sobretensión en L y C.',
+      teoria:'<p>f<sub>0</sub> = 1/(2π√(LC)) = 1 591,5 Hz. En f<sub>0</sub> las reactancias se cancelan (X<sub>L</sub> = X<sub>C</sub> = √(L/C) = 100 Ω): Z = R = 50 Ω, I<sub>p</sub> = 20 mA en fase con la tensión. Q = √(L/C)/R = 2, así que V<sub>L</sub> = V<sub>C</sub> = Q·V = 2 V pico, el doble de la fuente.</p><p>En el simulador la corriente sale ≈ 3 % menor: a los 50 Ω se suman ≈ 0,7 Ω de resistencias parásitas y ≈ 1 Ω equivalente al amortiguamiento numérico (2L·α<sub>num</sub> con Δt = 1 µs).</p><p>Fuera de resonancia, por ejemplo a 1 kHz: |Z| = 108,5 Ω, φ = −62,6° (capacitivo), I<sub>p</sub> = 9,21 mA.</p>',
+      pasos:['CH1 = tensión de entrada, CH2 = corriente: |Z| ≈ 50 Ω y Δφ ≈ 0°.','Bajar la frecuencia a 1 000 Hz: Δφ negativo (capacitivo); subirla a 2 500 Hz: positivo (inductivo).','Comparar V<sub>C</sub> (voltímetro 2) y V<sub>L</sub> (voltímetro 3): iguales en resonancia.'],
+      tabla:[row('|Z| en f<sub>0</sub> · Δφ','50 Ω (≈ 51 Ω simulado) · 0°','Osciloscopio'),row('Corriente pico','20,0 mA ideal · ≈ 19,3 mA simulado (13,7 mA rms)','Osciloscopio / amperímetro'),row('V<sub>C</sub> = V<sub>L</sub>','2,00 V pico ideal · ≈ 1,93 V simulado','Voltímetros 2 y 3'),row('A 1 kHz: |Z| · Δφ','108,5 Ω · −62,6°','Cambiar la frecuencia')]
+    }
+  },
+  rlcParallel:{
+    fam:'P4 · AC', title:'RLC paralelo (tanque LC) · R = 1 kΩ en serie con L = 10 mH ‖ C = 1 µF, senoidal 1 V',
+    build(){
+      gen('sine',1,1591.55);
+      part('R',1000,'T3C','T8C'); part('C',1e-6,'T8D','B8G',{polar:false}); part('L',10e-3,'T12D','B12G',{imax:0.5});
+      W('S0p','MAr','rojo'); W('MAb','T3A','negro'); W('T8A','T12A','amarillo');
+      W('B8J','RBN8','negro'); W('B12J','RBN12','negro'); W('S0n','RBN2','negro');
+      W('MVr','T8B','rojo'); W('MVb','B8I','negro');
+      meters('V2'); W('MV2r','T3B','rojo'); W('MV2b','B12I','negro');
+    },
+    scope:{t:0.0002,d1:0.5,d2:0.5,trig:0,ch1:'V2',ch2:'V'},
+    msg:'P4 · Tanque LC paralelo en resonancia',
+    doc:{
+      obj:'Verificar la resonancia paralela: impedancia máxima y corriente mínima.',
+      teoria:'<p>Z<sub>LC</sub> = jωL/(1 − ω²LC). En f<sub>0</sub> = 1 591,5 Hz el denominador se anula: el tanque ideal tiene impedancia infinita, toda la tensión queda en él (salida/entrada = 1, Δφ = 0) y la fuente casi no entrega corriente. Fuera de resonancia: a 1 kHz salida/entrada = 0,103 con +84,1° (inductivo); a 2 kHz, 0,212 con −77,8° (capacitivo). Ancho de banda f<sub>0</sub>/Q con Q = R√(C/L) = 10.</p><p><b>Lectura del simulador:</b> en f<sub>0</sub> la relación sale ≈ 0,95 y no 1. Es el amortiguamiento numérico de Euler implícito (α<sub>num</sub> ≈ ω<sub>0</sub>²Δt/2), que equivale a ≈ 20 kΩ en paralelo con el tanque con Δt = 0,5 µs. Con Δt = 1 µs (selector «Paso Δt») baja a ≈ 0,91, lo que confirma su origen numérico: buen ejemplo de verificación del paso de tiempo.</p>',
+      pasos:['CH1 = entrada, CH2 = tensión del tanque. Esperar ~10 ms al régimen estable (τ = 2RC = 2 ms).','Comprobar que el amperímetro marca casi 0 en f<sub>0</sub>.','Cambiar la frecuencia a 1 kHz y 2 kHz y comparar ganancia y fase.'],
+      tabla:[row('Salida/entrada en f<sub>0</sub>','1 ideal · ≈ 0,95 simulado · Δφ = 0°','Osciloscopio'),row('Corriente de la fuente en f<sub>0</sub>','≈ 0 (mínima)','Amperímetro'),row('A 1 kHz','0,103 · +84,1°','Osciloscopio'),row('A 2 kHz','0,212 · −77,8°','Osciloscopio')]
+    }
+  },
+
+  /* ---------------- P5 · DC con varias fuentes y medidores ---------------- */
+  dc2:{
+    fam:'P5 · DC varias fuentes', title:'Dos mallas, dos fuentes · F1 = 10 V, F2 = 5 V, R1 = R2 = 1 kΩ, R3 = 2 kΩ',
+    build(){ dc2Base(false); },
+    msg:'P5 · Circuito de dos mallas con dos fuentes y cuatro medidores',
+    doc:{
+      obj:'Verificar las leyes de Kirchhoff y el balance de potencia con dos fuentes y varios medidores a la vez.',
+      teoria:'<p>Nodo X (unión de R1, R2 y R3): (10 − V<sub>X</sub>)/1k + (5 − V<sub>X</sub>)/1k = V<sub>X</sub>/2k → V<sub>X</sub> = 6 V. Entonces I<sub>1</sub> = 4 mA, I<sub>2</sub> = −1 mA (la corriente <b>entra</b> a la fuente 2: el amperímetro 2 marca negativo) e I<sub>3</sub> = 3 mA. Nodos: 4 − 1 = 3 mA.</p><p>Potencias: F1 entrega 40 mW, F2 absorbe 5 mW; R1 disipa 16 mW, R2 1 mW y R3 18 mW. Balance: 40 − 5 = 16 + 1 + 18 = 35 mW.</p>',
+      pasos:['Leer A1 (I<sub>1</sub>), A2 (I<sub>2</sub>), V1 (V<sub>R3</sub> = V<sub>X</sub>) y V2 (V<sub>R1</sub>).','Comprobar la ley de nodos con A1 y A2, y la ley de mallas en la malla izquierda: 10 = V<sub>R1</sub> + V<sub>R3</sub>.','Activar el análisis docente para el balance de potencia.'],
+      tabla:[row('V<sub>X</sub> = V<sub>R3</sub>','6,000 V','Voltímetro 1'),row('V<sub>R1</sub>','4,000 V','Voltímetro 2'),row('I<sub>1</sub> (fuente 1)','4,000 mA','Amperímetro 1'),row('I<sub>2</sub> (fuente 2)','−1,000 mA','Amperímetro 2'),row('I<sub>3</sub> = I<sub>1</sub> + I<sub>2</sub>','3,000 mA','Ley de nodos'),row('Balance de potencia','40 − 5 = 35 mW','Análisis docente')]
+    }
+  },
+  dc2CL:{
+    fam:'P5 · DC varias fuentes', title:'Dos mallas con C = 1 µF y L = 100 mH en régimen estable',
+    build(){ dc2Base(true); },
+    msg:'P5 · Dos mallas con capacitor e inductor (régimen estable)',
+    doc:{
+      obj:'Comprobar que en DC estable el capacitor actúa como circuito abierto y el inductor como cortocircuito.',
+      teoria:'<p>Es el mismo circuito con C conectado entre el nodo X y tierra (con un puente a la columna 22) y L en serie con R3. Tras el transitorio inicial (τ ≈ (R1‖R2‖R3)·C = 0,4 ms) las lecturas son las del caso sin C ni L: I<sub>C</sub> = 0 (abierto), así que A1 + A2 sigue siendo la corriente de R3, y V<sub>L</sub> = 0 (cortocircuito), así que V<sub>X</sub> = V<sub>R3</sub> = 6 V. Energías: U<sub>C</sub> = ½·1 µF·(6 V)² = 18 µJ y U<sub>L</sub> = ½·0,1 H·(3 mA)² = 0,45 µJ.</p>',
+      pasos:['Esperar el régimen estable (unos milisegundos simulados).','V1 (X a tierra = tensión de C) ≈ 6 V; V3 (sobre L) ≈ 0 V; A1 y A2 iguales que sin C ni L.'],
+      tabla:[row('V<sub>X</sub> = V<sub>C</sub>','6,000 V','Voltímetro 1'),row('V<sub>L</sub>','0 V (cortocircuito)','Voltímetro 3'),row('V<sub>R1</sub>','4,000 V','Voltímetro 2'),row('I<sub>1</sub> · I<sub>2</sub> (I<sub>C</sub> = 0)','4,000 · −1,000 mA','Amperímetros 1 y 2'),row('U<sub>C</sub> · U<sub>L</sub>','18 µJ · 0,45 µJ','Análisis docente')]
+    }
+  }
+};
+// Variantes RLC serie: mismo montaje, distinta R (subamortiguado, crítico y sobreamortiguado).
+for(const k of ['rlc','rlc200','rlc1k']){
+  const P=PRESETS[k], R=P.rlcR;
+  P.build=()=>{
+    sw('T2C','T5C'); part('R',R,'T7C','T12C'); part('L',10e-3,'T14C','T19C',{imax:1}); part('C',1e-6,'T21C','T26C',{polar:false,vmax:25});
+    W('S0p','T2A','rojo'); W('T5A','MAr','rojo'); W('MAb','T7A','negro');
+    W('T12A','T14A','amarillo'); W('T19A','T21A','azul'); W('T26A','B26J','rojo'); W('B26I','S0n','negro');
+    W('MVr','T21B','amarillo'); W('MVb','T26B','azul');
+    meters('V2','V3'); W('MV2r','T14B','rojo'); W('MV2b','T19B','negro'); W('MV3r','T7B','rojo'); W('MV3b','T12B','negro');
+    st.selected='C:C1';
+  };
+  P.msg=`P3 · RLC serie con R = ${fmtOhm(R)} · cierre S1 para aplicar el escalón`;
+  const regime=R<200?'subamortiguada':R===200?'críticamente amortiguada':'sobreamortiguada';
+  const common='<p>ω<sub>0</sub> = 1/√(LC) = 10 000 rad/s (f<sub>0</sub> = 1 591,5 Hz); R<sub>crítica</sub> = 2√(L/C) = 200 Ω; α = R/(2L); ζ = α/ω<sub>0</sub> = R/200 Ω. En régimen estable v<sub>C</sub> = 9 V e i = 0. La resistencia interna de la fuente (0,5 Ω), el amperímetro (0,1 Ω) y los cables suman ≈ 0,7 Ω a R.</p>';
+  const specific={
+    20:'<p><b>R = 20 Ω → ζ = 0,1, respuesta subamortiguada.</b> α = 1 000 s⁻¹; ω<sub>d</sub> = √(ω<sub>0</sub>² − α²) = 9 950 rad/s → f<sub>d</sub> = 1 583,6 Hz (T<sub>d</sub> = 0,631 ms); Q = 1/(2ζ) = 5. Sobrepaso e<sup>−ζπ/√(1−ζ²)</sup> = 72,9 % → v<sub>C</sub> máx ≈ 15,6 V. La envolvente decae con 1/α = 1 ms.</p>',
+    200:'<p><b>R = 200 Ω → ζ = 1, amortiguamiento crítico.</b> v<sub>C</sub> = 9(1 − (1 + αt)e<sup>−αt</sup>) con α = 10⁴ s⁻¹: llega al valor final lo más rápido posible sin sobrepaso. El 63,2 % se alcanza en t ≈ 2,15/α = 0,215 ms (no es una τ simple). Corriente máxima (V/L)·(1/α)·e⁻¹ = 33,1 mA en t = 0,1 ms.</p>',
+    1000:'<p><b>R = 1 kΩ → ζ = 5, sobreamortiguado.</b> Raíces s = −α ± √(α² − ω<sub>0</sub>²) = −1 010 s⁻¹ y −98 990 s⁻¹. Domina la lenta: τ ≈ 0,99 ms, casi como un RC con τ = RC = 1 ms. Corriente máxima ≈ 8,7 mA a los 47 µs.</p>'
+  }[R];
+  P.doc={
+    obj:`Observar la respuesta ${regime} de un RLC serie a un escalón de 9 V y comparar con ω<sub>0</sub>, R<sub>crítica</sub> y ζ.`,
+    teoria:common+specific,
+    pasos:['Cerrar S1: el osciloscopio (disparo «Único») captura v<sub>C</sub> (CH1) e i (CH2).',R<200?'En el panel del osciloscopio aparece la frecuencia de oscilación medida (≈ 1 583 Hz).':'En el panel aparece el tiempo al 63,2 %.','Voltímetros: V1 = v<sub>C</sub>, V2 = v<sub>L</sub>, V3 = v<sub>R</sub>; en todo momento v<sub>R</sub> + v<sub>L</sub> + v<sub>C</sub> = 9 V.','Cambiar R en «Componente seleccionado» para recorrer los tres regímenes.'],
+    tabla:R===20?[row('ζ · Q','0,1 · 5','Teoría'),row('f<sub>d</sub> (oscilación)','1 583,6 Hz','Osciloscopio'),row('v<sub>C</sub> máximo','15,6 V','Osciloscopio CH1'),row('V<sub>C</sub> final · I final','9 V · 0','Voltímetro 1 · amperímetro')]
+      :R===200?[row('ζ','1,00 (1,004 con 0,7 Ω parásitos)','Teoría'),row('t al 63,2 %','0,215 ms','Osciloscopio CH1'),row('Corriente máxima','33,1 mA','Osciloscopio CH2'),row('Sobrepaso','0 %','Osciloscopio CH1')]
+      :[row('ζ','5','Teoría'),row('Constante lenta 1/|s₁|','0,99 ms','Osciloscopio, 63,2 %'),row('Corriente máxima','8,7 mA','Osciloscopio CH2'),row('Sobrepaso','0 %','Osciloscopio CH1')]
+  };
+}
+// Montaje común de P5: nodo X en la columna 10. R1 de F1 a X, R2 de F2 a X, R3 de X a tierra (riel −).
+function dc2Base(withCL){
+  st.srcs[0].V=10; st.srcs[1].V=5; st.srcs[1].on=true;
+  part('R',1000,'T5C','T10C'); part('R',1000,'T10D','T15D'); part('R',2000,'T10E','B10H');
+  W('S0p','MAr','rojo'); W('MAb','T5A','negro'); W('S0n','RBN2','negro'); W('S1n','RBN20','negro');
+  meters('A2','V2'); W('S1p','MA2r','rojo'); W('MA2b','T15A','negro');
+  W('MV2r','T5B','rojo'); W('MV2b','T10B','negro');
+  if(!withCL){ W('MVr','T10A','rojo'); W('B10J','RBN10','negro'); W('MVb','B10I','negro'); return; }
+  // Variante: el nodo X se prolonga a la columna 22 con un puente; allí C va de X a tierra
+  // (su corriente de arranque queda limitada por R1 y R2) y L va en serie con R3.
+  W('T10A','T22A','amarillo'); W('MVr','T22B','rojo'); W('MVb','RBN11','negro');
+  part('C',1e-6,'T22D','B22G',{polar:true,vmax:25}); W('B22J','RBN22','negro');
+  part('L',0.1,'B10J','B13J',{imax:0.5}); W('B13I','RBN13','negro');
+  meters('V3'); W('MV3r','B10I','rojo'); W('MV3b','B13H','negro');
+}
+// Orden y agrupación de los botones de ejemplos en el panel.
+const PRESET_GROUPS=[
+  ['Circuito asignado',['laboratorio']],
+  ['Regresión (simulador base)',['serie','paralelo','mixto','divisor']],
+  ['P1 · RC',['rc','rcSquare']],['P2 · RL',['rl','rlSquare']],
+  ['P3 · RLC serie (escalón)',['rlc','rlc200','rlc1k']],
+  ['P4 · AC',['filterLP','filterHP','rlrc','rlcRes','rlcParallel']],
+  ['P5 · DC con varias fuentes',['dc2','dc2CL']]
+];
+const PRESET_SHORT={laboratorio:'Circuito del profesor',serie:'Serie',paralelo:'Paralelo',mixto:'Mixto',divisor:'Divisor',
+  rc:'RC escalón',rcSquare:'RC cuadrada',rl:'RL escalón',rlSquare:'RL cuadrada',rlc:'R = 20 Ω (sub)',rlc200:'R = 200 Ω (crítico)',rlc1k:'R = 1 kΩ (sobre)',
+  filterLP:'Pasa-bajas',filterHP:'Pasa-altas',rlrc:'RL–RC serie-paralelo',rlcRes:'RLC serie resonancia',rlcParallel:'Tanque LC paralelo',dc2:'Dos mallas',dc2CL:'Dos mallas con C y L'};
+function buildPresetButtons(){
+  L('presetButtons').innerHTML=PRESET_GROUPS.map(([g,ids])=>`<div class="pgroup"><span>${g}</span><div class="btnrow">${ids.map(id=>`<button class="mini${id==='laboratorio'?' on':''}" data-preset="${id}" title="${PRESETS[id].title.replace(/<[^>]+>/g,'')}">${PRESET_SHORT[id]}</button>`).join('')}</div></div>`).join('');
+  L('presetButtons').querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>preset(b.dataset.preset));
+}
+// Ficha del ejemplo cargado (panel lateral) y tabla completa en la documentación.
+function presetDocHTML(id,full){
+  const P=PRESETS[id], d=P.doc;
+  return `<div class="pfam">${P.fam}</div><div class="ptitle">${P.title}</div><p class="pobj">${d.obj}</p>
+    <div class="pteo">${d.teoria}</div>
+    <table class="theory exp"><tr><th>Magnitud</th><th>Teórico</th>${full?'<th>Cómo se mide</th>':''}</tr>${d.tabla.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td>${full?`<td>${r[2]}</td>`:''}</tr>`).join('')}</table>
+    <ol class="psteps">${d.pasos.map(p=>`<li>${p}</li>`).join('')}</ol>`;
+}
+function renderPresetDoc(){
+  const id=st.currentPreset; if(!id||!L('presetDoc')) return;
+  L('presetDoc').innerHTML=presetDocHTML(id,false)+`<div class="btnrow"><button class="mini" data-open-doc="ejemplos">Ver todos los ejemplos</button><button class="mini" data-open-doc="${id==='laboratorio'?'asignado':'ejemplos'}">Documentación completa</button></div>`;
+  L('presetDoc').querySelectorAll('[data-open-doc]').forEach(b=>b.onclick=()=>openDocs(b.dataset.openDoc));
+  document.querySelectorAll('#presetButtons [data-preset]').forEach(b=>b.classList.toggle('on',b.dataset.preset===id));
+}
 function preset(name){
-  clearBoard();
+  const P=PRESETS[name]; if(!P) return;
+  clearBoard(); resetExpandableHardware();        // 3 fuentes, sin medidores adicionales, generador en DC
   st.srcs.forEach(s=>{s.tripped=false;s.on=false;});
   st.srcs[0].on=true; st.srcs[0].V=9;
-  // Los ejemplos de respuesta al escalón inician con DC; los filtros activan AC explícitamente.
-  if(name!=='filterLP'&&name!=='filterHP'){st.wave.source=0;st.wave.kind='dc';L('waveSource').value='0';L('waveKind').value='dc';}
-  if(name==='rc'||name==='rl'){
-    const sw=createComponent('S',{span:3,orient:'h',a:'T2C',b:'T5C',closed:false});
-    const r=createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
-    const reactive=name==='rc'
-      ?createComponent('C',{value:1e-6,span:3,orient:'v',a:'T20D',b:'B20G',polar:false,vmax:25})
-      :createComponent('L',{value:10e-3,span:3,orient:'v',a:'T20D',b:'B20G',imax:.5});
-    W('S0p','T2A','rojo');W('T5A','MAr','rojo');W('MAb','T7A','negro');W('T12A','T20A','rojo');
-    W('B20J','S0n','negro');W('MVr','T20B','amarillo');W('MVb','B20I','azul');
-    st.selected=(name==='rc'?'C:':'L:')+reactive.id;
-    buildSrcPanel();redraw();msg(`Prueba ${name.toUpperCase()} cargada · cierre S1 para iniciar`);return;
+  st.wave={source:0,kind:'dc',amp:5,freq:100,offset:0,duty:50};
+  L('timeStep').value='auto';
+  P.build();
+  for(const [id,key] of [['waveSource','source'],['waveKind','kind'],['waveAmp','amp'],['waveFreq','freq'],['waveOffset','offset'],['waveDuty','duty']]) L(id).value=st.wave[key];
+  const s=Object.assign({t:0.001,d1:2,d2:0.005,trig:0,ch1:'V',ch2:'A',mode:'auto',slope:'up'},P.scope||{});
+  L('scopeTimeDiv').value=s.t; L('scopeVDiv').value=s.d1; L('scopeIDiv').value=s.d2; L('scopeTrigger').value=s.trig;
+  st.scope.mode=s.mode; st.scope.slope=s.slope; L('scopeMode').value=s.mode; L('scopeSlope').value=s.slope;
+  buildScopeOptions(s.ch1,s.ch2); buildExtraMeterControls();
+  st.currentPreset=name;
+  buildSrcPanel(); redraw(); setSpeed(+L('simSpeed').value); st.scope.armedAt=st.transient.time;
+  renderPresetDoc();
+  msg(P.msg);
+}
+
+// ---------------------------------------------------------------------------
+// Documentación integrada: ventana con pestañas. La pestaña de ejemplos se genera
+// desde PRESETS para que la teoría documentada y los montajes nunca se separen.
+// ---------------------------------------------------------------------------
+function buildDocs(){
+  L('docPresets').innerHTML=PRESET_GROUPS.map(([g,ids])=>`<h4>${g}</h4>`+ids.map(id=>
+    `<div class="card">${presetDocHTML(id,true)}<div class="btnrow"><button class="mini" data-doc-load="${id}">Cargar este ejemplo</button></div></div>`).join('')).join('');
+  const t=PRESETS.laboratorio.doc.tabla;
+  L('docLabTable').innerHTML=`<table><tr><th>Magnitud</th><th>Teórico</th><th>Cómo se mide</th></tr>${t.map(r=>`<tr><td>${r[0]}</td><td class="n">${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</table>`;
+  L('docs').querySelectorAll('[data-doc-load]').forEach(b=>b.onclick=()=>{ closeDocs(); preset(b.dataset.docLoad); });
+}
+function openDocs(tab){
+  tab=tab||'asignado';
+  L('docs').hidden=false;
+  L('docs').querySelectorAll('[data-doc]').forEach(s=>s.hidden=s.dataset.doc!==tab);
+  L('docs').querySelectorAll('[data-doc-tab]').forEach(b=>b.classList.toggle('on',b.dataset.docTab===tab));
+  L('docs').querySelector('.docs-body').scrollTop=0;
+}
+function closeDocs(){ L('docs').hidden=true; }
+
+// Diagnóstico del montaje (casos límite de la guía): patas sin conexión y piezas en una
+// parte del circuito que no llega a ninguna fuente encendida (nodo flotante, sin referencia).
+function diagnose(){
+  const out=[], count={}, inc=n=>count[n]=(count[n]||0)+1, comps=placedComps();
+  st.wires.forEach(w=>{ if(PT[w.a]&&PT[w.b]){ inc(nodeOf(w.a)); inc(nodeOf(w.b)); } });
+  comps.forEach(([t,k,z])=>{ inc(nodeOf(z.a)); inc(nodeOf(z.b)); });
+  comps.forEach(([t,k,z])=>{ for(const e of [z.a,z.b]) if(count[nodeOf(e)]===1) out.push(`${k}: la pata en ${holeName(e)} no está conectada a nada.`); });
+  if(st.srcs.some(s=>s.on)){
+    const {find,uni}=makeUF();
+    st.wires.forEach(w=>{ if(PT[w.a]&&PT[w.b]) uni(nodeOf(w.a),nodeOf(w.b)); });
+    comps.forEach(([t,k,z])=>{ if(!z.burned&&(t!=='S'||z.closed)) uni(nodeOf(z.a),nodeOf(z.b)); });
+    for(const id of meterIds('A')) if(!meterFused(id)) uni(`M${id}r`,`M${id}b`);
+    st.srcs.forEach(s=>uni('SP'+s.i,'SN'+s.i));
+    const live=new Set(st.srcs.filter(s=>s.on).map(s=>find('SP'+s.i)));
+    const off=comps.filter(([t,k,z])=>!live.has(find(nodeOf(z.a)))).map(([t,k])=>k);
+    if(off.length) out.push(`${off.join(', ')} ${off.length>1?'están':'está'} en una parte del circuito sin conexión a una fuente encendida (nodo flotante): sus lecturas serán 0.`);
   }
-  if(name==='filterLP'||name==='filterHP'){
-    st.wave={source:0,kind:'sine',amp:1,freq:159.15,offset:0,duty:50};
-    st.srcs.forEach((s,i)=>{s.on=i===0;s.V=0;});
-    if(name==='filterLP'){
-      createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
-      const c=createComponent('C',{value:1e-6,span:3,orient:'v',a:'T20D',b:'B20G',polar:false});
-      W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T12A','T20A','amarillo');W('B20J','S0n','negro');W('MVr','T20B','rojo');W('MVb','B20I','azul');st.selected='C:'+c.id;
-    }else{
-      const c=createComponent('C',{value:1e-6,span:5,orient:'h',a:'T7C',b:'T12C',polar:false});
-      createComponent('R',{value:1000,span:5,orient:'h',a:'T14C',b:'T19C'});
-      W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T12A','T14A','amarillo');W('T19A','B19J','negro');W('S0n','B19I','negro');W('MVr','T14B','rojo');W('MVb','T19B','azul');st.selected='C:'+c.id;
-    }
-    L('waveSource').value='0';L('waveKind').value='sine';L('waveAmp').value='1';L('waveFreq').value='159.15';L('waveOffset').value='0';
-    buildSrcPanel();redraw();setSpeed(+L('simSpeed').value||1);msg(name==='filterLP'?'Filtro pasa-bajas · frecuencia de corte ≈ 159 Hz':'Filtro pasa-altas · frecuencia de corte ≈ 159 Hz');return;
-  }
-  if(name==='dc2'){
-    st.wave.kind='dc';st.srcs.forEach((s,i)=>{s.on=i<2;s.V=i===0?5:i===1?4:s.V;});
-    createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
-    createComponent('R',{value:2000,span:5,orient:'h',a:'T14C',b:'T19C'});
-    W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T12A','T14A','amarillo');W('T19A','B26J','negro');
-    W('S0n','S1p','azul');W('S1n','B26I','negro');W('MVr','T14B','rojo');W('MVb','T19B','azul');
-    buildSrcPanel();redraw();msg('DC con dos fuentes en serie · 9 V total');return;
-  }
-  if(name==='rlc'){
-    createComponent('S',{span:3,orient:'h',a:'T2C',b:'T5C',closed:false});
-    createComponent('R',{value:20,span:5,orient:'h',a:'T7C',b:'T12C'});
-    createComponent('L',{value:10e-3,span:3,orient:'h',a:'T14C',b:'T19C',imax:1});
-    const c=createComponent('C',{value:1e-6,span:3,orient:'h',a:'T21C',b:'T26C',polar:false,vmax:25});
-    W('S0p','T2A','rojo');W('T5A','MAr','rojo');W('MAb','T7A','negro');
-    W('T12A','T14A','amarillo');W('T19A','T21A','azul');W('T26A','B26J','rojo');W('B26I','S0n','negro');
-    W('MVr','T21B','amarillo');W('MVb','T26I','azul');st.selected='C:'+c.id;
-    buildSrcPanel();redraw();msg('Prueba RLC serie subamortiguada cargada · cierre S1');return;
-  }
-  if(name==='rlcParallel'){
-    st.wave={source:0,kind:'sine',amp:1,freq:1591.55,offset:0,duty:50};
-    st.srcs.forEach((s,i)=>{s.on=i===0;s.V=0;});
-    createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
-    createComponent('C',{value:1e-6,span:3,orient:'v',a:'T14D',b:'B14G',polar:false});
-    createComponent('L',{value:10e-3,span:3,orient:'v',a:'T21D',b:'B21G',imax:.5});
-    W('S0p','MAr','rojo');W('MAb','T7A','negro');W('T7A','T21A','amarillo');
-    W('T12A','T14A','azul');W('S0n','B14J','negro');W('B14J','B21J','negro');
-    W('MVr','T14B','rojo');W('MVb','B14I','azul');
-    L('waveSource').value='0';L('waveKind').value='sine';L('waveAmp').value='1';L('waveFreq').value='1591.55';L('waveOffset').value='0';
-    st.selected='C:C1';buildSrcPanel();redraw();setSpeed(+L('simSpeed').value||1);
-    msg('RLC paralelo · f₀ ≈ 1,592 kHz · compara frecuencia, fase y corriente alrededor de resonancia');return;
-  }
-  if(name!=='laboratorio') return;
-  // Batería(+) → S1 → R1 → nodo X ; R2 y C1 en paralelo entre X y la batería(−).
-  createComponent('S',{span:3,orient:'h',a:'T2C',b:'T5C',closed:false});
-  createComponent('R',{value:1000,span:5,orient:'h',a:'T7C',b:'T12C'});
-  createComponent('R',{value:2000,span:3,orient:'v',a:'T14D',b:'B14G'});
-  const c1=createComponent('C',{value:10e-6,span:3,orient:'v',a:'T20D',b:'B20G',polar:true,vmax:25});
-  W('S0p','T2A','rojo'); W('T12A','T14A','rojo'); W('T14B','T20B','amarillo');
-  W('B14H','B20H','negro'); W('S0n','B20J','negro');
-  // Amperímetro en serie entre S1 y R1 (corriente total) y voltímetro sobre C1 (= V de R2).
-  W('T5A','MAr','rojo'); W('MAb','T7A','negro');
-  W('MVr','T20A','rojo'); W('MVb','B20I','negro');
-  st.selected='C:'+c1.id;
-  buildSrcPanel(); redraw();
-  msg('Circuito del profesor cargado · S1 abierto: doble clic sobre S1 para cerrarlo');
+  return [...new Set(out)];
+}
+function renderDiag(){
+  const el=L('diag'); if(!el) return;
+  const d=diagnose();
+  el.innerHTML=d.slice(0,4).map(x=>`<div>⚠ ${x}</div>`).join('')+(d.length>4?`<div>… y ${d.length-4} aviso(s) más.</div>`:'');
 }
 
 /* ============================================================
@@ -2135,23 +2935,32 @@ function bind(){
   const waveRead=()=>{st.wave.source=+L('waveSource').value;st.wave.kind=L('waveKind').value;
     st.wave.amp=Math.min(VSRC_MAX,Math.max(0,+L('waveAmp').value||0));st.wave.freq=Math.min(20000,Math.max(1,+L('waveFreq').value||1));
     st.wave.offset=+L('waveOffset').value||0;st.wave.duty=Math.max(1,Math.min(99,+L('waveDuty').value||50));
-    st.transient.lastResult=null; if(+L('simSpeed').value>0)setSpeed(+L('simSpeed').value); else st.trace.length=0;
+    st.transient.lastResult=null; clearAC(); if(+L('simSpeed').value>0)setSpeed(+L('simSpeed').value); else st.trace.length=0;
     L('tag').textContent=st.wave.kind==='dc'?'listo':'señal '+st.wave.kind; redraw();};
   ['waveSource','waveKind','waveAmp','waveFreq','waveOffset','waveDuty'].forEach(id=>L(id).addEventListener('change',waveRead));
   ['scopeTimeDiv','scopeVDiv','scopeIDiv','scopeTrigger'].forEach(id=>L(id).addEventListener('input',drawTrace));
-  ['scopeVSource','scopeASource'].forEach(id=>L(id).addEventListener('change',()=>{st.trace.length=0;drawTrace();}));
-  L('clrTrace').onclick=()=>{ st.trace.length=0; drawTrace(); };
+  ['scopeVSource','scopeASource'].forEach(id=>L(id).addEventListener('change',()=>{st.trace.length=0;st.scope.frozen=null;st.scope.edge=null;st.scope.armedAt=st.transient.time;scopeLabels();drawTrace();}));
+  L('scopeMode').onchange=()=>{ st.scope.mode=L('scopeMode').value; st.scope.frozen=null;st.scope.edge=null; st.scope.armedAt=st.transient.time; drawTrace(); };
+  L('scopeSlope').onchange=()=>{ st.scope.slope=L('scopeSlope').value; st.scope.frozen=null;st.scope.edge=null; st.scope.armedAt=st.transient.time; drawTrace(); };
+  L('scopeRearm').onclick=()=>{ st.scope.frozen=null;st.scope.edge=null; st.scope.armedAt=st.transient.time; drawTrace(); msg('Osciloscopio rearmado: esperando el disparo'); };
+  L('clrTrace').onclick=()=>{ st.trace.length=0; st.scope.frozen=null;st.scope.edge=null; st.scope.armedAt=st.transient.time; drawTrace(); };
   L('scopeCsv').onclick=()=>{
-    if(!st.trace.length)return msg('Aún no hay datos temporales para exportar');
-    const rows=[['tiempo_s',`voltaje_${L('scopeVSource').value}_V`,`corriente_${L('scopeASource').value}_A`],...st.trace.map(p=>[p.t,p.v??'',p.i??''])];
+    const data=st.scope.frozen?st.scope.frozen.samples:st.trace;
+    if(!data.length)return msg('Aún no hay datos temporales para exportar');
+    const rows=[['tiempo_s',`CH1_${meterLabel(chId(1)).replace(' ','')}_${chUnit(1)}`,`CH2_${meterLabel(chId(2)).replace(' ','')}_${chUnit(2)}`],...data.map(p=>[p.t,p.v??'',p.i??''])];
     download('osciloscopio_lab.csv',rows.map(r=>r.map(x=>`"${x}"`).join(',')).join('\r\n'),'text/csv;charset=utf-8');
   };
+  // Documentación integrada
+  L('docBtn').onclick=()=>openDocs(st.currentPreset&&st.currentPreset!=='laboratorio'?'ejemplos':'asignado');
+  L('docClose').onclick=closeDocs;
+  L('docs').addEventListener('click',e=>{ if(e.target===L('docs')) closeDocs(); });
+  L('docs').querySelectorAll('[data-doc-tab]').forEach(b=>b.onclick=()=>openDocs(b.dataset.docTab));
+  window.addEventListener('keydown',e=>{ if(e.key==='Escape'&&!L('docs').hidden) closeDocs(); });
   L('zIn').onclick=()=>setZoom(zoom*1.2);
   L('zOut').onclick=()=>setZoom(zoom/1.2);
   L('zFit').onclick=fitZoom;
   L('z100').onclick=()=>setZoom(1);
   L('scroller').addEventListener('wheel',e=>{ if(!e.ctrlKey) return; e.preventDefault(); setZoom(zoom*(e.deltaY<0?1.1:1/1.1)); },{passive:false});
-  document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>preset(b.dataset.preset));
   document.querySelectorAll('[data-log]').forEach(b=>b.onclick=()=>addLog(b.dataset.log));
   L('clearLog').onclick=()=>{ st.log=[]; renderLog(); };
   L('clearAlerts').onclick=()=>{ st.alerts=[]; renderAlerts(); };
@@ -2168,7 +2977,7 @@ function bind(){
     const data={wires:st.wires, res:st.res, caps:st.caps, inds:st.inds, sws:st.sws, ideal:st.ideal, fuseA:st.fuseA,
                 srcs:st.srcs.map(s=>({i:s.i,V:s.V,on:s.on})),wave:st.wave,
                 meters:st.extraMeters.map(m=>({...m})),
-                scope:{timeDiv:L('scopeTimeDiv').value,vDiv:L('scopeVDiv').value,iDiv:L('scopeIDiv').value,trigger:L('scopeTrigger').value,dt:L('timeStep').value,vSource:L('scopeVSource').value,aSource:L('scopeASource').value}};
+                scope:{timeDiv:L('scopeTimeDiv').value,vDiv:L('scopeVDiv').value,iDiv:L('scopeIDiv').value,trigger:L('scopeTrigger').value,dt:L('timeStep').value,vSource:L('scopeVSource').value,aSource:L('scopeASource').value,mode:st.scope.mode,slope:st.scope.slope}};
     download('circuito_protoboard.json', JSON.stringify(data,null,1), 'application/json');
   };
   L('loadJson').onclick=()=>L('fileIn').click();
@@ -2193,7 +3002,9 @@ function bind(){
       if(typeof d.fuseA==='boolean')st.fuseA=d.fuseA;
       // Recupera configuración instrumental en archivos nuevos y mantiene compatibilidad con JSON anteriores.
       if(d.wave){Object.assign(st.wave,d.wave);for(const [id,key] of [['waveSource','source'],['waveKind','kind'],['waveAmp','amp'],['waveFreq','freq'],['waveOffset','offset'],['waveDuty','duty']])L(id).value=st.wave[key];}
-      if(d.scope){L('scopeTimeDiv').value=d.scope.timeDiv||.001;L('scopeVDiv').value=d.scope.vDiv||2;L('scopeIDiv').value=d.scope.iDiv||.005;L('scopeTrigger').value=d.scope.trigger||0;if(d.scope.dt)L('timeStep').value=d.scope.dt;}
+      if(d.scope){L('scopeTimeDiv').value=d.scope.timeDiv||.001;L('scopeVDiv').value=d.scope.vDiv||2;L('scopeIDiv').value=d.scope.iDiv||.005;L('scopeTrigger').value=d.scope.trigger||0;if(d.scope.dt)L('timeStep').value=d.scope.dt;
+        st.scope.mode=d.scope.mode||'auto'; st.scope.slope=d.scope.slope||'up'; L('scopeMode').value=st.scope.mode; L('scopeSlope').value=st.scope.slope;}
+      st.currentPreset=null; L('presetDoc').innerHTML='<p class="hint">Montaje abierto desde archivo.</p>';
       buildWaveSourceOptions(st.wave.source);buildScopeOptions(d.scope?.vSource||'V',d.scope?.aSource||'A');updateLabSize();buildExtraMeterControls();
       buildSrcPanel(); redraw(); setSpeed(+L('simSpeed').value||1);
     }catch(err){ msg('El archivo no se pudo leer'); } };
@@ -2206,9 +3017,13 @@ function bind(){
    ============================================================ */
 function redraw(){
   drawBoard(); drawSources(); drawInstr(); drawTray(); drawWires(); drawRes(); drawHits(); drawOver();
-  buildRPanel(); buildComponentEditor(); buildGuide(); renderReadings();
+  buildRPanel(); buildComponentEditor(); buildGuide();
+  // Si el montaje cambió, el paso automático se recalcula con los nuevos R, C y L.
+  if(st.transient.speed>0&&(L('timeStep')?.value||'auto')==='auto') st.transient.dt=computeDt(st.transient.speed);
+  renderDiag(); renderReadings();
 }
-buildSwatches(); buildSrcPanel(); buildWaveSourceOptions(); buildScopeOptions(); buildExtraMeterControls(); updateLabSize(); bind(); renderAlerts();
+buildSwatches(); buildSrcPanel(); buildWaveSourceOptions(); buildScopeOptions(); buildExtraMeterControls(); updateLabSize();
+buildPresetButtons(); buildDocs(); bind(); renderAlerts();
 preset('laboratorio');   // el montaje del profesor aparece armado al cargar la página
 setSpeed(1);             // ajusta el paso inicial a la señal activa y limpia el barrido anterior
 fitZoom();               // al abrir se ve toda la mesa
