@@ -200,7 +200,7 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
 <header class="top">
   <h1>Protoboard · circuitos eléctricos</h1>
   <span class="sub">Circuitos DC y transitorios RLC con generador de señales y osciloscopio virtual</span>
-  <button class="docbtn" id="docBtn" title="Manual del laboratorio y guion de la sustentación">📘 Documentación</button>
+  <button class="docbtn" id="docBtn" title="Manual del laboratorio">📘 Documentación</button>
   <span class="tag" id="tag">listo</span>
 </header>
 
@@ -215,7 +215,7 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
       <details><summary>Varias fuentes y medidores</summary><p>Añade fuentes sin límite fijo desde el panel de fuentes. Los botones de medición añaden voltímetros y amperímetros; cada uno tiene bornes propios en la mesa (a la derecha de los instrumentos base). Quitar una fuente o medidor elimina sus cables asociados.</p></details>
       <details><summary>Medidores en AC</summary><p>Con el generador activo, voltímetros y amperímetros muestran el <b>valor eficaz verdadero (rms)</b> y el pico, como un multímetro en modo AC. Para formas de onda, fase y amplitud instantánea se usa el osciloscopio.</p></details>
       <details><summary>Osciloscopio</summary><p>CH1 y CH2 pueden ser cualquier voltímetro o amperímetro. V e I del mismo elemento → |Z| y Δφ(V−I). Dos voltímetros (entrada/salida) → ganancia y desfase. Disparo «Único» + «Rearmar» retiene un transitorio y mide τ (63,2 %) o la frecuencia de oscilación.</p></details>
-      <details><summary>Documentación</summary><p>El botón <b>📘 Documentación</b> de la barra superior abre el manual: circuito asignado, ejemplos con teoría y valores esperados, instrumentos, modelo numérico y guion de la sustentación.</p></details>
+      <details><summary>Documentación</summary><p>El botón <b>📘 Documentación</b> de la barra superior abre el manual: circuito asignado, ejemplos con teoría y valores esperados, instrumentos y modelo físico y numérico.</p></details>
       <details><summary>Medir R, C y L</summary><p>Óhmetro, capacímetro e inductímetro solo con <b>todas las fuentes apagadas</b>. Si hay otros caminos en paralelo mides el equivalente: levanta una pata para medir la pieza sola.</p></details>
       <details><summary>Zoom y tiempo</summary><p>Usa la lupa (arriba a la derecha de la mesa) o Ctrl + rueda del ratón para acercar o alejar; «Ajustar» muestra toda la mesa. En «Simulación en el tiempo» puedes ir en cámara lenta para ver cargarse el capacitor.</p></details>
     </div>
@@ -465,7 +465,6 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
       <button class="mini" data-doc-tab="ejemplos">Ejemplos y validación</button>
       <button class="mini" data-doc-tab="instrumentos">Instrumentos y paneles</button>
       <button class="mini" data-doc-tab="modelo">Modelo físico y numérico</button>
-      <button class="mini" data-doc-tab="sustentacion">Guion de sustentación</button>
     </div>
     <button class="mini x" id="docClose" title="Cerrar (Esc)">Cerrar ✕</button>
   </div>
@@ -536,7 +535,7 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
     <div id="docLabTable"></div>
     <div class="note">Las lecturas difieren de la teoría ideal en la cuarta cifra porque el modelo incluye la resistencia interna de la fuente (0,5 Ω), la de los amperímetros (0,1 Ω), la de los cables (0,02 Ω) y la impedancia del voltímetro (10 MΩ). Con Δt = τ/50, el método de Euler implícito da una τ alrededor de 1 % mayor (ver «Modelo físico y numérico»), dentro del criterio de 2 % para transitorios.</div>
 
-    <h4>Demostración paso a paso</h4>
+    <h4>Procedimiento paso a paso</h4>
     <ol>
       <li>Con S1 abierto, todos los medidores marcan ≈ 0 (no hay camino cerrado desde la fuente).</li>
       <li><b>Doble clic sobre S1.</b> Los medidores sobrepasan su valor, oscilan y se estabilizan en ≈ 3 mA (A1 y A2), 6 V (V1) y 3 V (V2). Anotar con «＋».</li>
@@ -632,42 +631,6 @@ button:disabled:hover{border-color:var(--edge-hi);color:var(--ink)}
     </ul>
   </section>
 
-  <!-- ===================== 5. GUION DE SUSTENTACIÓN ===================== -->
-  <section class="docs-tab" data-doc="sustentacion" hidden>
-    <h3>Guion de la sustentación (20 min + 5 de preguntas)</h3>
-    <table>
-      <tr><th>Tiempo</th><th>Bloque</th><th>Contenido y acción en el laboratorio</th><th>Responsable</th></tr>
-      <tr><td class="n">0–2</td><td>Introducción</td><td>Objetivo del proyecto: ampliar el simulador DC con C, L, generador, medidores ilimitados y osciloscopio, y validarlo contra la teoría.</td><td>Integrante 1</td></tr>
-      <tr><td class="n">2–5</td><td>Recorrido del simulador</td><td>Mesa, protoboard, fuentes, generador, medidores y osciloscopio. Mostrar cómo se añade un voltímetro y cómo se mueve una pieza.</td><td>Integrante 2</td></tr>
-      <tr><td class="n">5–12</td><td><b>Circuito asignado</b></td><td>Esquema y teoría (estable, carga, descarga). Demostración en vivo: cerrar S1, lecturas que se estabilizan en 3 mA / 6 V / 3 V; captura de carga con τ ≈ 6,67 ms; descarga con τ ≈ 20 ms; ley de nodos con A1 y A2; energía de 180 µJ.</td><td>Integrantes 1 y 3</td></tr>
-      <tr><td class="n">12–16</td><td>Validación</td><td>Un ejemplo por familia: RC (τ), RLC subamortiguado (f<sub>d</sub>), filtro pasa-bajas (−3 dB, −45°), dos mallas (Kirchhoff y balance de potencia). Tabla de errores frente al criterio 1 % / 2 %.</td><td>Integrante 4</td></tr>
-      <tr><td class="n">16–19</td><td>Modelo numérico</td><td>MNA, modelos compañeros, elección de Δt, error de Euler implícito (≈ 1 % con τ/50), idealizaciones.</td><td>Integrante 2</td></tr>
-      <tr><td class="n">19–20</td><td>Cierre</td><td>Conclusiones, trabajo futuro y declaración de las herramientas de apoyo usadas (incluida la IA) y de cómo se verificó el código.</td><td>Integrante 3</td></tr>
-    </table>
-    <div class="note"><b>Antes de empezar:</b> abrir el archivo, pulsar «Circuito del profesor», comprobar que el osciloscopio dice «ÚNICO · esperando disparo», cerrar las secciones del panel que no se usarán y tener esta documentación abierta en la pestaña «Circuito asignado».</div>
-
-    <h4>Preguntas probables sobre el circuito asignado</h4>
-    <div class="card"><b>¿Por qué τ de carga y de descarga son distintas?</b> Porque τ = R<sub>Th</sub>·C y la resistencia de Thévenin vista por C1 cambia: al cargar es R1‖R2 = 666,7 Ω (la fuente ideal es un cortocircuito para el cálculo de R<sub>Th</sub>); al descargar, con S1 abierto, solo queda R2 = 2 kΩ.</div>
-    <div class="card"><b>¿Por qué la corriente inicial es 9 mA y no 3 mA?</b> En t = 0⁺ el capacitor está descargado y su tensión no puede cambiar instantáneamente: actúa como un cortocircuito que anula a R2, y toda la tensión cae en R1 (9 V / 1 kΩ).</div>
-    <div class="card"><b>¿Por qué C1 no llega a 9 V?</b> Porque en régimen estable está en paralelo con R2, que forma un divisor con R1: V<sub>C1</sub> = 9·2/3 = 6 V. Si se quitara R2, C1 llegaría a 9 V.</div>
-    <div class="card"><b>¿Las lecturas oscilan porque el circuito oscila?</b> No. El RC es de primer orden y su respuesta es exponencial; la oscilación es la dinámica del instrumento (como una aguja), y el osciloscopio muestra el valor real sin oscilación.</div>
-    <div class="card"><b>¿Qué pasa con la energía?</b> C1 almacena ½CV² = 180 µJ. Al descargar, toda esa energía se disipa en R2. Durante la carga, la fuente además entrega potencia continuamente a R1 y R2 (27 mW en régimen estable).</div>
-    <div class="card"><b>¿Cuánto error tiene el simulador?</b> En régimen estable, menos de 0,05 % (por resistencias internas y medidores reales). En transitorios, ≈ 1 % en τ por el método de Euler implícito con Δt = τ/50, que baja a la mitad al reducir Δt a la mitad.</div>
-    <div class="card"><b>¿Qué pasa si se conecta C1 al revés?</b> Es electrolítico: con más de 1 V de polarización inversa el simulador lo marca como quemado y lo deja como circuito abierto.</div>
-
-    <h4>Preguntas orientadoras de la guía (respuestas cortas)</h4>
-    <ul>
-      <li><b>Kirchhoff y potencia:</b> se verifican con los ejemplos de dos mallas (4 − 1 = 3 mA; 40 − 5 = 35 mW) y en el circuito asignado (3 + 6 = 9 V).</li>
-      <li><b>C y L en DC:</b> en t = 0⁺, C es un cortocircuito y L un circuito abierto; en régimen estable al revés. Lo muestran los ejemplos RC, RL y «Dos mallas con C y L».</li>
-      <li><b>τ en el osciloscopio:</b> tiempo hasta 63,2 % del cambio total; el simulador lo mide automáticamente en disparo único.</li>
-      <li><b>RLC:</b> R &lt; 200 Ω subamortiguado, R = 200 Ω crítico, R &gt; 200 Ω sobreamortiguado (L = 10 mH, C = 1 µF). f<sub>d</sub> medida ≈ 1 583 Hz frente a f<sub>0</sub> = 1 592 Hz; R controla el decaimiento (α = R/2L) y Q.</li>
-      <li><b>Resonancia:</b> en serie la corriente es máxima y Δφ = 0; en paralelo (tanque) la corriente es mínima y la tensión máxima.</li>
-      <li><b>Impedancia y fase:</b> |Z<sub>C</sub>| = 1/(ωC) baja con la frecuencia, |Z<sub>L</sub>| = ωL sube; el osciloscopio mide |Z| y Δφ (−90° ideal en C, +90° en L).</li>
-      <li><b>Filtros:</b> f<sub>c</sub> = 159 Hz; en f<sub>c</sub> la salida es 0,707 de la entrada (−3 dB) con ∓45°.</li>
-      <li><b>Paso de tiempo:</b> al reducir Δt a la mitad el error en τ se reduce a la mitad (método de primer orden); deja de mejorar cuando domina el ruido de lectura (≈ 0,5 %).</li>
-      <li><b>Trabajo futuro:</b> método trapezoidal (más preciso), diagrama de Bode automático, modo X-Y (figuras de Lissajous), cursores en el osciloscopio, resistencia de bobinado de los inductores.</li>
-    </ul>
-  </section>
 
   </div>
  </div>
